@@ -3,11 +3,11 @@ module.exports = {
   tagline: "Detect, track and alert on infrastructure drift",
   url: "https://docs.driftctl.com",
   baseUrl: "/",
-  onBrokenLinks: "throw",
+  onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
   organizationName: "cloudskiff",
-  projectName: "driftctl",
+  projectName: "driftctl-docs",
   themeConfig: {
     navbar: {
       title: "driftctl",
