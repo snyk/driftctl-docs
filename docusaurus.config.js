@@ -1,8 +1,8 @@
 module.exports = {
   title: "driftctl-docs",
   tagline: "Detect, track and alert on infrastructure drift",
-  url: "https://docs.driftctl.com",
-  baseUrl: "/",
+  url: "https://cloudskiff.github.io",
+  baseUrl: "/driftctl-docs/",
   onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
