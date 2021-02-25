@@ -14,7 +14,8 @@ $ GITHUB_TOKEN=14758f1afd44c09b7992073ccf00b43d GITHUB_ORGANIZATION=my-org drift
 Below you can find the minimal scope required for driftctl to be able to scan every GitHub supported resources.
 
 ```shell
-repo # Required to enumerate public and private repos
+repo            # Required to enumerate public and private repos
+read:org        # Required to list your organization teams
 ```
 
 :::caution
