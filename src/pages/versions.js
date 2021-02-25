@@ -12,7 +12,7 @@ const Version = () => {
   const pastVersions = versions.filter(
     (version) => version !== latestVersion && version.name !== "current"
   );
-  const repoUrl = `https://github.com/${siteConfig.organizationName}/${siteConfig.projectName}`;
+  const repoUrl = `https://github.com/${siteConfig.organizationName}/driftctl`;
 
   return (
     <Layout title="Versions" description="Documentation versions for driftctl">
