@@ -10,21 +10,6 @@ driftctl is available on Linux, macOS and Windows.
 
 Binaries are available in the [release page](https://github.com/cloudskiff/driftctl/releases).
 
-export const Manual = ({linux}) => (
-  <Tabs
-    defaultValue="linux"
-    values={[
-      { label: "Linux", value: "linux" },
-      { label: "macOS", value: "macos" },
-      { label: "Windows", value: "windows" },
-    ]}
-  >
-    <TabItem value="linux">{linux}</TabItem>
-    <TabItem value="macos">This is an orange 🍊</TabItem>
-    <TabItem value="windows">This is a banana 🍌</TabItem>
-  </Tabs>
-)
-
 <Tabs
   defaultValue="manual"
   values={[
@@ -37,12 +22,12 @@ export const Manual = ({linux}) => (
   <TabItem value="manual">
 
 <Tabs
-    defaultValue="linux-macos"
-    values={[
-      { label: "Linux / macOS", value: "linux-macos" },
-      { label: "Windows", value: "windows" },
-    ]}
-  >
+  defaultValue="linux-macos"
+  values={[
+    { label: "Linux / macOS", value: "linux-macos" },
+    { label: "Windows", value: "windows" },
+  ]}
+>
   <TabItem value="linux-macos">
 
 This is an example using `curl`. If you don't have `curl`, install it, or use `wget`.

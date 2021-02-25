@@ -24,7 +24,11 @@ Each line must be of kind
 - `resource_type.resource_id`, resource_id could be a wildcard to exclude all resources of a given type.
 - `resource_type.resource_id.path.to.FieldName`, resource_id can be wildcard to ignore a drift on given field for a given type, path could also contain wildcards.
 
-> **N.B.** Fields are not case-sensitive.
+:::note
+
+Fields are not case-sensitive.
+
+:::
 
 If your resource id or the path of a field contains dot or backslash you can escape them with backslashes:
 
