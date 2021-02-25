@@ -41,7 +41,7 @@ module.exports = {
           "aria-label": "Discord server",
         },
         {
-          href: "https://twitter.com/getdriftctl",
+          href: "https://twitter.com/driftctl",
           label: "Twitter",
           position: "right",
           "aria-label": "Twitter account",
