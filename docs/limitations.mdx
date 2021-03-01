@@ -14,6 +14,22 @@ sidebar_label: Limitations
 - Terraform version >= 0.12 is supported
 - Terraform AWS provider version >= 3.x is supported
 
+## Integration in terraform workflow
+
+driftctl compares your real infrastructure to your state.
+When running `terraform refresh` or `terraform apply` , since it triggers a refresh, terraform updates your state with upstream modifications.
+Thus, driftctl won't be able to compute diffs between state and infrastructure as both sides are in sync.
+
+**driftctl should be run BEFORE any terraform actions in your CI/CD pipeline**
+
+For example:
+
+- create an aws_s3_bucket with terraform, apply to create a bucket
+- manually enable the bucket versioning in the console
+- run driftctl => it will detect the drift `~ Versioning.0.Enabled: false => true`
+- run terraform apply => no changes, but under the hood it will update your state and set versioning to true
+- run driftctl => **no changes*
+
 ## Terraform Resources
 
 ### AWS
