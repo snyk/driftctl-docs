@@ -104,3 +104,30 @@ $ DCTL_OUTPUT=json://result.json driftctl scan
   coverage: 33,
 }
 ```
+
+## Computed Fields
+
+From Terraform documentation, a `computed` field is often used to represent values that are not user configurable or can not be known at time of `terraform plan` or `apply`.
+
+Since those values are not known ahead of time from terraform point of view, it is obviously possible that the values displayed in a terraform state file are not up-to-date and may require a `terraform refresh`.
+
+Thus, it could be possible that driftctl finds drifts that are considered false positives because of those outdated values.
+
+We decided to output computed fields and to display a message at the end of the scan to remind you of this behavior.
+
+```shell
+Found drifted resources:
+  - eipalloc-0e2894d8ea42851df (aws_eip):
+    ~ AssociationId: "" => "eipassoc-0ee67e1ca759733a2" (computed)
+    ~ Instance: "" => "i-004611704837fd09a" (computed)
+    ~ NetworkInterface: "" => "eni-0a62972b0471447f6" (computed)
+    ~ PrivateDns: <nil> => "ip-172-31-40-4.eu-west-3.compute.internal" (computed)
+    ~ PrivateIp: "" => "172.31.40.4" (computed)
+Found 1 resource(s)
+ - 100% coverage
+ - 1 covered by IaC
+ - 0 not covered by IaC
+ - 0 deleted on cloud provider
+ - 1/1 drifted from IaC
+You have diffs on computed fields, check the documentation for potential false positive drifts
+```
