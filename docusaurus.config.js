@@ -1,4 +1,8 @@
-module.exports = {
+const versions = require("./versions.json");
+
+const latestVersion = versions[0];
+
+const config = {
   title: "driftctl-docs",
   tagline: "Detect, track and alert on infrastructure drift",
   url: "https://docs.driftctl.com",
@@ -59,20 +63,32 @@ module.exports = {
       copyright: `Copyright © 2020-${new Date().getFullYear()} CloudSkiff.`,
     },
   },
-  presets: [
-    [
-      "@docusaurus/preset-classic",
-      {
-        docs: {
-          path: "./docs",
-          routeBasePath: "/",
-          sidebarPath: require.resolve("./sidebars.js"),
-          editUrl: "https://github.com/cloudskiff/driftctl-docs/edit/main/",
-        },
-        theme: {
-          customCss: require.resolve("./src/css/custom.css"),
-        },
-      },
-    ],
-  ],
+  presets: [],
 };
+
+const classicPreset = ["@docusaurus/preset-classic"];
+
+const docs = {
+  path: "./docs",
+  routeBasePath: "/",
+  sidebarPath: require.resolve("./sidebars.js"),
+  editUrl: "https://github.com/cloudskiff/driftctl-docs/edit/main/",
+  versions: {},
+};
+
+docs.versions[latestVersion] = {
+  path: latestVersion,
+};
+
+const theme = {
+  customCss: require.resolve("./src/css/custom.css"),
+};
+
+classicPreset.push({
+  docs,
+  theme,
+});
+
+config.presets.push(classicPreset);
+
+module.exports = config;
