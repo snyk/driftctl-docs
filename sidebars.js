@@ -12,13 +12,16 @@ module.exports = {
         {
           Commands: [
             {
-              Scan: ["usage/cmd/scan/iac-source", "usage/cmd/scan/output", "usage/cmd/scan/filtering"],
+              Scan: ["usage/cmd/scan/iac-source", "usage/cmd/scan/output"],
               Completion: ["usage/cmd/completion/script"],
             },
           ],
         },
         {
           Flags: ["usage/flags/error-reporting", "usage/flags/version-check"],
+        },
+        {
+          Filtering: ["usage/filtering/driftignore", "usage/filtering/rules"],
         },
         'usage/log-level',
       ],
