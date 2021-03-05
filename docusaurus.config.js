@@ -63,6 +63,19 @@ const config = {
       copyright: `Copyright © 2020-${new Date().getFullYear()} CloudSkiff.`,
     },
   },
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          {
+            to: `/${latestVersion}/installation`,
+            from: '/installation',
+          },
+        ],
+      },
+    ],
+  ],
   presets: [],
 };
 
