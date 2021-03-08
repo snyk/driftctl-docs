@@ -62,6 +62,10 @@ const config = {
       style: "dark",
       copyright: `Copyright © 2020-${new Date().getFullYear()} CloudSkiff.`,
     },
+    metadatas: [
+      {name: 'og:type', content: 'website'},
+      {name: 'og:image', content: 'https://docs.driftctl.com/img/preview.png'}
+    ],
   },
   presets: [],
 };
