@@ -35,6 +35,18 @@ module.exports = {
           GitHub: ["providers/github/authentication", "providers/github/resources"],
         },
       ],
+    },
+    {
+      type: 'category',
+      label: 'CI/CD',
+      items: [
+          "ci_cd/intro",
+        {
+          Guides: [
+              "ci_cd/guides/circleci"
+          ]
+        }
+      ],
     }
   ],
 };
