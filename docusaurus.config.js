@@ -67,6 +67,19 @@ const config = {
       {name: 'og:image', content: 'https://docs.driftctl.com/img/preview.png'}
     ],
   },
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          {
+            to: `/${latestVersion}/installation`,
+            from: '/installation',
+          },
+        ],
+      },
+    ],
+  ],
   presets: [],
 };
 
