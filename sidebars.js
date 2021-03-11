@@ -43,7 +43,8 @@ module.exports = {
           "ci_cd/intro",
         {
           Guides: [
-              "ci_cd/guides/circleci"
+              "ci_cd/guides/circleci",
+              "ci_cd/guides/gitlabci"
           ]
         }
       ],
