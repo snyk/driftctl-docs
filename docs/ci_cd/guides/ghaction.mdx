@@ -25,12 +25,9 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_DEFAULT_REGION: us-east-1
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
       - name: Run driftctl
         uses: cloudskiff/driftctl-action@v1
         env:
-          DCTL_NO_VERSION_CHECK: true
           DCTL_FILTER: "Type=='aws_instance'"
         with:
           version: 0.6.0
@@ -70,12 +67,9 @@ jobs:
   driftctl:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
       - name: Run driftctl
         uses: cloudskiff/driftctl-action@v1
         env:
-          DCTL_NO_VERSION_CHECK: true
           DCTL_FROM: tfstate+s3://my-path/terraform.tfstate
   plan:
     needs: [validate-fmt, driftctl]
