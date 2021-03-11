@@ -37,6 +37,13 @@ $ driftctl scan --from tfstate://my-states/directory
   - Local: `--from tfstate://terraform.tfstate`
   - S3: `--from tfstate+s3://my-bucket/path/to/state.tfstate`
 
+You can use any unsupported backend by using `terraform` to pipe your state in a file and then use this file with driftctl:
+
+```shell
+$ terraform state pull > state.tfstate
+$ driftctl scan --from tfstate://state.tfstate
+```
+
 ### S3
 
 driftctl needs read-only access so you could use the policy below to ensure minimal access to your state file.
