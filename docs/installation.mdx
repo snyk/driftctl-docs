@@ -57,6 +57,35 @@ Optionally install driftctl to a central location in your `PATH`:
 $ sudo mv driftctl /usr/local/bin/
 ```
 
+## Verify digital signatures
+
+Cloudskiff releases are signed using PGP key (ed25519) with ID `ACC776A79C824EBD` and fingerprint `2776 6600 5A7F 01D4 84F6 376D ACC7 76A7 9C82 4EBD`
+Our key can be retrieved from common keyservers.
+
+```shell
+# Download binary, checksums and signature
+$ curl -L https://github.com/cloudskiff/driftctl/releases/latest/download/driftctl_linux_amd64 -o driftctl_linux_amd64
+$ curl -L https://github.com/cloudskiff/driftctl/releases/latest/download/driftctl_SHA256SUMS -o driftctl_SHA256SUMS
+$ curl -L https://github.com/cloudskiff/driftctl/releases/latest/download/driftctl_SHA256SUMS.gpg -o driftctl_SHA256SUMS.gpg
+
+# Import key
+$ gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 0xACC776A79C824EBD
+gpg: key ACC776A79C824EBD: public key "Cloudskiff <security@cloudskiff.com>" imported
+gpg: Total number processed: 1
+gpg:               imported: 1
+
+# Verify signature (optionally trust the key from gnupg to avoid any warning)
+$ gpg --verify driftctl_SHA256SUMS.gpg
+gpg: Signature made jeu. 04 févr. 2021 14:58:06 CET
+gpg:                using EDDSA key 277666005A7F01D484F6376DACC776A79C824EBD
+gpg:                issuer "security@cloudskiff.com"
+gpg: Good signature from "Cloudskiff <security@cloudskiff.com>" [ultimate]
+
+# Verify checksum
+$ sha256sum --ignore-missing -c driftctl_SHA256SUMS
+driftctl_linux_amd64: OK
+```
+
   </TabItem>
   <TabItem value="windows">
 
@@ -94,6 +123,42 @@ $ docker run -t --rm \
 
 `cloudskiff/driftctl:<VERSION_TAG>` run a specific driftctl tagged release
 
+## Usage examples
+
+```shell
+# With a local state
+$ docker run -t --rm \
+  -v $(pwd):/app:ro \
+  -v ~/.driftctl:/home/.driftctl \
+  -e AWS_ACCESS_KEY_ID=XXXXXXXX \
+  -e AWS_SECRET_ACCESS_KEY=XXXX \
+  cloudskiff/driftctl scan
+
+# With state stored on a s3 backend
+$ docker run -t --rm \
+  -v $(pwd):/app:ro \
+  -v ~/.driftctl:/home/.driftctl \
+  -e AWS_ACCESS_KEY_ID=XXXXXXXX \
+  -e AWS_SECRET_ACCESS_KEY=XXXX \
+  cloudskiff/driftctl scan --from tfstate+s3://my-bucket/path/to/state.tfstate
+
+# With multiple states
+$ docker run -t --rm \
+    -v $(pwd):/app:ro \
+    -v ~/.driftctl:/home/.driftctl \
+    -e AWS_ACCESS_KEY_ID=XXXXXXXX \
+    -e AWS_SECRET_ACCESS_KEY=XXXX \
+    cloudskiff/driftctl scan --from tfstate://terraform_S3.tfstate --from tfstate://terraform_VPC.tfstate
+
+# Using a named profile
+$ docker run -t --rm \
+    -v ~/.aws:/home/.aws:ro \ # mount your aws config folder
+    -v $(pwd):/app:ro \
+    -v ~/.driftctl:/home/.driftctl \
+    -e AWS_PROFILE=your-profile \
+    cloudskiff/driftctl scan
+```
+
   </TabItem>
   <TabItem value="homebrew">
 
@@ -114,56 +179,3 @@ $ sudo port install driftctl
 
   </TabItem>
 </Tabs>
-
-## Verify digital signatures
-
-Cloudskiff releases are signed using PGP key (ed25519) with ID `ACC776A79C824EBD` and fingerprint `2776 6600 5A7F 01D4 84F6 376D ACC7 76A7 9C82 4EBD`
-Our key can be retrieved from common keyservers.
-
-```shell
-# Download binary, checksums and signature
-$ curl -L https://github.com/cloudskiff/driftctl/releases/latest/download/driftctl_linux_amd64 -o driftctl_linux_amd64
-$ curl -L https://github.com/cloudskiff/driftctl/releases/latest/download/driftctl_SHA256SUMS -o driftctl_SHA256SUMS
-$ curl -L https://github.com/cloudskiff/driftctl/releases/latest/download/driftctl_SHA256SUMS.gpg -o driftctl_SHA256SUMS.gpg
-
-# Import key
-$ gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 0xACC776A79C824EBD
-gpg: key ACC776A79C824EBD: public key "Cloudskiff <security@cloudskiff.com>" imported
-gpg: Total number processed: 1
-gpg:               imported: 1
-
-# Verify signature (optionally trust the key from gnupg to avoid any warning)
-$ gpg --verify driftctl_SHA256SUMS.gpg
-gpg: Signature made jeu. 04 févr. 2021 14:58:06 CET
-gpg:                using EDDSA key 277666005A7F01D484F6376DACC776A79C824EBD
-gpg:                issuer "security@cloudskiff.com"
-gpg: Good signature from "Cloudskiff <security@cloudskiff.com>" [ultimate]
-
-# Verify checksum
-$ sha256sum --ignore-missing -c driftctl_SHA256SUMS
-driftctl_linux_amd64: OK
-```
-
-## Run driftctl
-
-Be sure to have [configured](providers/aws/authentication.mdx) your AWS credentials.
-
-You will need to assign [proper permissions](providers/aws/authentication.mdx#least-privileged-policy) to allow driftctl to scan your account.
-
-```shell
-# With a local state
-$ driftctl scan
-# Same as
-$ driftctl scan --from tfstate://terraform.tfstate
-
-# To specify AWS credentials
-$ AWS_ACCESS_KEY_ID=XXX AWS_SECRET_ACCESS_KEY=XXX driftctl scan
-# or using a named profile
-$ AWS_PROFILE=profile_name driftctl scan
-
-# With state stored on a s3 backend
-$ driftctl scan --from tfstate+s3://my-bucket/path/to/state.tfstate
-
-# With multiples states
-$ driftctl scan --from tfstate://terraform_S3.tfstate --from tfstate://terraform_VPC.tfstate
-```
