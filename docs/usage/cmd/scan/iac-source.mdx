@@ -31,7 +31,7 @@ $ driftctl scan --from tfstate+s3://statebucketdriftctl/states
 $ driftctl scan --from tfstate://my-states/directory
 
 # We also support fetching tfstate manifests from URLs
-$ driftctl scan --from tfsate+https://example.com/terraform.tfsate
+$ driftctl scan --from tfstate+https://example.com/terraform.tfstate
 ```
 
 ## Supported IaC sources
@@ -39,7 +39,7 @@ $ driftctl scan --from tfsate+https://example.com/terraform.tfsate
 - Terraform state
   - Local: `--from tfstate://terraform.tfstate`
   - S3: `--from tfstate+s3://my-bucket/path/to/state.tfstate`
-  - HTTP `--from tfsate+http://my-url/state.tfsate`
+  - HTTP: `--from tfstate+http://my-url/state.tfstate`
 
 You can use any unsupported backend by using `terraform` to pipe your state in a file and then use this file with driftctl:
 
