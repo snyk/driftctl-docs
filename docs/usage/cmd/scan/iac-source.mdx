@@ -23,12 +23,18 @@ $ driftctl scan \
 # You can also read all files under a given prefix for S3
 $ driftctl scan --from tfstate+s3://statebucketdriftctl/states
 
-# ... or in a given local folder
+# In a given local folder
 # driftctl will recursively use all files under this folder.
 #
 # N.B. Symlinks under the root folder will be ignored.
 #      If the folder itself is a symlink it will be followed.
 $ driftctl scan --from tfstate://my-states/directory
+
+# We also support HTTP(s) URLs with authentication
+# the tool will fetch the file from the given URL
+#
+# You can use the --headers option if you need to add extra headers to the request (e.g: for authentication purposes)
+$ driftctl scan --from tfstate+https://example.com/terraform.tfstate --headers 'Authorization=Basic ...; X-Custom-Header=value'
 ```
 
 ## Supported IaC sources
@@ -36,6 +42,7 @@ $ driftctl scan --from tfstate://my-states/directory
 - Terraform state
   - Local: `--from tfstate://terraform.tfstate`
   - S3: `--from tfstate+s3://my-bucket/path/to/state.tfstate`
+  - HTTPS: `--from tfstate+https://my-url/state.tfstate`
 
 You can use any unsupported backend by using `terraform` to pipe your state in a file and then use this file with driftctl:
 
