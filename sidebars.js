@@ -45,7 +45,8 @@ module.exports = {
           Guides: [
               "ci_cd/guides/circleci",
               "ci_cd/guides/ghaction",
-              "ci_cd/guides/gitlabci"
+              "ci_cd/guides/gitlabci",
+              "ci_cd/guides/jenkins"
           ]
         }
       ],
