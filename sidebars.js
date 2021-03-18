@@ -11,10 +11,8 @@ module.exports = {
       items: [
         {
           Commands: [
-            {
-              Scan: ["usage/cmd/scan/iac-source", "usage/cmd/scan/output"],
-              Completion: ["usage/cmd/completion/script"],
-            },
+            "usage/cmd/scan-usage",
+            "usage/cmd/completion-usage",
           ],
         },
         {
