@@ -95,7 +95,7 @@ driftctl needs read-only access so you could use the policy below to ensure mini
 
 #### HTTP + Gitlab
 
-The HTTP backend supports fetching the Terraform state from Gitlab using their REST API.
+The HTTP backend supports the GitLab managed Terraform State using their API.
 
 All you need is a Gitlab repository that contains a Terraform state and an access token with the `read_api` scope.
 
@@ -107,6 +107,8 @@ driftctl scan \
 --from tfstate+https://gitlab.com/api/v4/projects/<project_id>/terraform/state/<path_to_state> \
 --headers "Authorization=Bearer $GITLAB_TOKEN"
 ```
+
+You can find more information about the GitLab managed Terraform State on the [GitLab documentation website](https://docs.gitlab.com/ee/user/infrastructure/terraform_state.html).
 
 ## --output
 
