@@ -105,7 +105,7 @@ Here's what the command looks like :
 $ GITLAB_TOKEN=<access_token> \
 driftctl scan \
 --from tfstate+https://gitlab.com/api/v4/projects/<project_id>/terraform/state/<path_to_state> \
---headers "Authorization=Bearer $GITLAB_TOKEN"
+--headers "Authorization=Bearer ${GITLAB_TOKEN}"
 ```
 
 You can find more information about the GitLab managed Terraform State on the [GitLab documentation website](https://docs.gitlab.com/ee/user/infrastructure/terraform_state.html).
