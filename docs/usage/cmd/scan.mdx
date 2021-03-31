@@ -99,7 +99,7 @@ The HTTP backend supports the GitLab managed Terraform State using their API.
 
 All you need is a GitLab repository that contains a Terraform state and an access token with the `read_api` scope.
 
-Here's what the command looks like :
+Here's what the command looks like:
 
 ```shell
 $ GITLAB_TOKEN=<access_token> \
@@ -109,6 +109,28 @@ driftctl scan \
 ```
 
 You can find more information about the GitLab managed Terraform State on the [GitLab documentation website](https://docs.gitlab.com/ee/user/infrastructure/terraform_state.html).
+
+#### HTTP + Terraform Cloud
+
+The HTTP backend supports the Terraform Cloud using their API.
+
+All you need is a Terraform Cloud access token and a workspace identifier.
+
+Here's what the command looks like:
+
+```shell
+# First, use Terraform API to request the hosted-state-download-url
+$ TFC_TOKEN=<terraform_cloud_token> WORKSPACE_ID=<workspace_id> \
+curl \
+  --header "Authorization: Bearer ${TFC_TOKEN}" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/workspaces/$WORKSPACE_ID/current-state-version
+
+# Use driftctl with the https endpoint
+$ driftctl scan --from tfstate+https://<hosted-state-download-url>
+```
+
+You can find more information about the Terraform Cloud's API on the [Terraform Cloud documentation website](https://www.terraform.io/docs/cloud/api/index.html).
 
 ## --output
 
