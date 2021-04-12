@@ -76,6 +76,18 @@ const config = {
             to: `/${latestVersion}/installation`,
             from: '/installation',
           },
+          {
+            to: `/${latestVersion}/limitations`,
+            from: '/limitations',
+          },
+          {
+            to: `/${latestVersion}/ci_cd/intro`,
+            from: '/ci_cd',
+          },
+          {
+            to: `/${latestVersion}/providers/aws/authentication`,
+            from: '/aws/policy',
+          },
         ],
       },
     ],
