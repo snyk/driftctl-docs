@@ -20,6 +20,7 @@ Scan resources from the input Terraform statefile and compare it to your current
 | [`--output`](#--output "output") | `DCTL_OUTPUT` | `console://` |
 | [`--to`](#--to "to") | `DCTL_TO` | `aws+tf` |
 | [`--quiet`](#--quiet "quiet") | `DCTL_QUIET` | `false` |
+| [`--strict`](#--strict "strict") | `DCTL_STRICT` | `false` |
 
 ## --from
 
@@ -251,3 +252,20 @@ driftctl supports these providers:
 ## --quiet
 
 This flag prevents stdout to be use for anything but the scan result.
+
+## --strict
+
+When running driftctl against an AWS account, you may experience unnecessary noises with resources that don't belong to you. It can be the case if you have an organization account in which you will by default have a service-linked role associated to your account (e.g. AWSServiceRoleForOrganizations). For now, driftctl ignores those service-linked resources by default.
+
+If you still want to include those resources in the report anyway, you can enable the strict mode.
+
+For now, resources include:
+
+- Service-linked AWS IAM roles, including their policies and policy attachments
+
+### Usage
+
+```shell
+# Enable the strict mode
+$ driftctl scan --strict
+```
