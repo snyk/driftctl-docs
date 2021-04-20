@@ -41,3 +41,7 @@ aws_lambda_function.*.Environment
 # Will ignore lastModified for my-lambda-name lambda function
 aws_lambda_function.my-lambda-name.LastModified
 ```
+
+## Precedence over filter rules
+
+The above mechanism to ignore resources can be used in combination with filter rules. Bear in mind that if the same resource is included by a filter rule and excluded inside the .driftignore file, driftctl will just ignore this resource.
