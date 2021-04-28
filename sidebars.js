@@ -16,7 +16,7 @@ module.exports = {
           ],
         },
         {
-          Flags: ["usage/flags/crash-reporting", "usage/flags/version-check"],
+          Flags: ["usage/flags/crash-reporting", "usage/flags/version-check", "usage/flags/disable-telemetry"],
         },
         {
           Filtering: ["usage/filtering/driftignore", "usage/filtering/rules"],
