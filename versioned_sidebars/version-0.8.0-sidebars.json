@@ -55,6 +55,10 @@
             {
               "type": "doc",
               "id": "version-0.8.0/usage/flags/version-check"
+            },
+            {
+              "type": "doc",
+              "id": "version-0.8.0/usage/flags/disable-telemetry"
             }
           ]
         },
