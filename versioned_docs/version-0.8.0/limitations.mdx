@@ -11,8 +11,18 @@ sidebar_label: Limitations
 
 ## Terraform & Providers Support
 
-- Terraform version >= 0.12 is supported
+- Terraform version >= 0.11 is supported
 - Terraform AWS provider version >= 3.x is supported
+
+When performing a scan using a non-supported Terraform state, driftctl will ignore that state, will display a warning message and the scan will continue anyway. So if you specify multiple states at once, only supported ones will be used.
+
+```
+$ driftctl scan --from tfstate://terraform.tfstate
+WARNING: terraform.tfstate was generated using Terraform 0.10.8 which is currently not supported by driftctl
+Please read documentation at https://docs.driftctl.com/limitations
+Scanning resources: ⣟ (36)
+...
+```
 
 ## Integration in terraform workflow
 
