@@ -20,6 +20,8 @@ Below is a list of data we retrieve when error reporting is enabled.
 - **packages**: Golang used packages and their versions
 - **stacktrace**: The error stack
 
+The crash reporting is silent, it will never make your scan fail. You can know whether a report has been sent or not by setting the log level to debug : `LOG_LEVEL=debug driftctl scan ...`.
+
 ## Example
 
 Below is a full example of a nil pointer crash report.
