@@ -23,4 +23,8 @@ $ driftctl scan --from tfstate+s3://my-bucket/path/to/state.tfstate
 
 # With multiple states
 $ driftctl scan --from tfstate://terraform_S3.tfstate --from tfstate://terraform_VPC.tfstate
+
+# Using glob pattern
+$ driftctl scan --from tfstate://path/to/**/*.tfstate
+$ driftctl scan --from tfstate+s3://path/to/**/*.tfstate
 ```

@@ -29,7 +29,7 @@ We are investigating to support the Terraform code as well, as a state does not 
 
 :::note
 
-Multiple states can be read by passing `--from` flags
+Multiple states can be read by passing `--from` flags. You can also use glob patterns to match multiple state files at once.
 
 :::
 
@@ -50,6 +50,8 @@ $ driftctl scan --from tfstate+s3://statebucketdriftctl/states
 # N.B. Symlinks under the root folder will be ignored.
 #      If the folder itself is a symlink it will be followed.
 $ driftctl scan --from tfstate://my-states/directory
+# Only match state files in that directory
+$ driftctl scan --from tfstate://my-states/directory/*.tfstate
 
 # We also support HTTP(s) URLs with authentication
 # the tool will fetch the file from the given URL
