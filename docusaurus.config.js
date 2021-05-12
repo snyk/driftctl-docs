@@ -88,6 +88,10 @@ const config = {
             to: `/${latestVersion}/providers/aws/authentication`,
             from: '/aws/policy',
           },
+          {
+            to: `/${latestVersion}/providers/github/authentication`,
+            from: '/github/policy',
+          },
         ],
       },
     ],
