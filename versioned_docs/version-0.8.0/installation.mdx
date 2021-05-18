@@ -106,18 +106,18 @@ You can use also our official Docker image from the terminal.
 
 ```shell
 $ docker run -t --rm \
-  -v ~/.aws:/home/.aws:ro \
+  -v ~/.aws:/root/.aws:ro \
   -v $(pwd):/app:ro \
-  -v ~/.driftctl:/home/.driftctl \
+  -v ~/.driftctl:/root/.driftctl \
   -e AWS_PROFILE=non-default-profile \
   cloudskiff/driftctl scan
 ```
 
-`-v ~/.aws:/home/.aws:ro` (optionally) mounts your `~/.aws` containing AWS credentials and profile
+`-v ~/.aws:/root/.aws:ro` (optionally) mounts your `~/.aws` containing AWS credentials and profile
 
 `-v $(pwd):/app:ro` (optionally) mounts your working dir containing the terraform state
 
-`-v ~/.driftctl:/home/.driftctl` (optionally) prevents driftctl to download the provider at each run
+`-v ~/.driftctl:/root/.driftctl` (optionally) prevents driftctl to download the provider at each run
 
 `-e AWS_PROFILE=cloudskiff` (optionally) exports the non-default AWS profile name to use
 
@@ -129,7 +129,7 @@ $ docker run -t --rm \
 # With a local state
 $ docker run -t --rm \
   -v $(pwd):/app:ro \
-  -v ~/.driftctl:/home/.driftctl \
+  -v ~/.driftctl:/root/.driftctl \
   -e AWS_ACCESS_KEY_ID=XXXXXXXX \
   -e AWS_SECRET_ACCESS_KEY=XXXX \
   cloudskiff/driftctl scan
@@ -137,7 +137,7 @@ $ docker run -t --rm \
 # With state stored on a s3 backend
 $ docker run -t --rm \
   -v $(pwd):/app:ro \
-  -v ~/.driftctl:/home/.driftctl \
+  -v ~/.driftctl:/root/.driftctl \
   -e AWS_ACCESS_KEY_ID=XXXXXXXX \
   -e AWS_SECRET_ACCESS_KEY=XXXX \
   cloudskiff/driftctl scan --from tfstate+s3://my-bucket/path/to/state.tfstate
@@ -145,16 +145,16 @@ $ docker run -t --rm \
 # With multiple states
 $ docker run -t --rm \
     -v $(pwd):/app:ro \
-    -v ~/.driftctl:/home/.driftctl \
+    -v ~/.driftctl:/root/.driftctl \
     -e AWS_ACCESS_KEY_ID=XXXXXXXX \
     -e AWS_SECRET_ACCESS_KEY=XXXX \
     cloudskiff/driftctl scan --from tfstate://terraform_S3.tfstate --from tfstate://terraform_VPC.tfstate
 
 # Using a named profile
 $ docker run -t --rm \
-    -v ~/.aws:/home/.aws:ro \ # mount your aws config folder
+    -v ~/.aws:/root/.aws:ro \ # mount your aws config folder
     -v $(pwd):/app:ro \
-    -v ~/.driftctl:/home/.driftctl \
+    -v ~/.driftctl:/root/.driftctl \
     -e AWS_PROFILE=your-profile \
     cloudskiff/driftctl scan
 ```
