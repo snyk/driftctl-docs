@@ -58,7 +58,7 @@ $ driftctl scan -o json://stdout | driftctl gen-driftignore -i /dev/stdin
 $ driftctl scan --from tfstate://state1.tfstate -o json://stdout | driftctl gen-driftignore -i /dev/stdin --exclude-changed
 
 # Unmanaged resources will be excluded, output sent to .driftignore file
-$ cat result.json | driftctl gen-driftignore --exclude-unmanaged > .driftignore
+$ driftctl gen-driftignore -i result.json --exclude-unmanaged > .driftignore
 ```
 
 You can filter which kind of resource you want to ignore using these flags :
