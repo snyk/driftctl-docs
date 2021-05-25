@@ -45,3 +45,24 @@ aws_lambda_function.my-lambda-name.LastModified
 ## Precedence over filter rules
 
 The above mechanism to ignore resources can be used in combination with filter rules. Bear in mind that if the same resource is included by a filter rule and excluded inside the .driftignore file, driftctl will just ignore this resource.
+
+## Automatically generate a driftignore file
+
+Driftctl provides a command to automatically generate a driftignore file from a previous scan. This command parses a JSON input from a given file and sends output to stdout.
+
+```shell
+# Ignore all current drifts
+$ driftctl scan -o json://stdout | driftctl gen-driftignore -i /dev/stdin
+
+# Changed resources will be excluded
+$ driftctl scan --from tfstate://state1.tfstate -o json://stdout | driftctl gen-driftignore -i /dev/stdin --exclude-changed
+
+# Unmanaged resources will be excluded, output sent to .driftignore file
+$ driftctl gen-driftignore -i result.json --exclude-unmanaged > .driftignore
+```
+
+You can filter which kind of resource you want to ignore using these flags :
+
+- `--exclude-unmanaged` : Exclude unmanaged resources
+- `--exclude-missing` : Exclude unmanaged resources
+- `--exclude-changed` : Exclude unmanaged resources
