@@ -1,0 +1,54 @@
+---
+id: gen-driftignore-usage
+title: Driftignore generator
+---
+
+Many of us have reasons to not target 100% IaC coverage of our AWS accounts. In this case, driftctl continuously delivers drift notifications that we don’t care about. Behold! There’s a solution.
+
+You can start using driftctl with a clean state, by ignoring all the current resources that are not yet under control. Driftctl provides a command to automatically generate a driftignore file from a previous scan. This command parses a JSON input from a given file and sends output to stdout.
+
+```shell
+# Ignore all current drifts
+$ driftctl scan -o json://stdout | driftctl gen-driftignore -i /dev/stdin
+
+# Changed resources will be excluded
+$ driftctl scan --from tfstate://state1.tfstate -o json://stdout | driftctl gen-driftignore -i /dev/stdin --exclude-changed
+
+# Unmanaged resources will be excluded, output sent to .driftignore file
+$ driftctl scan --from tfstate://state1.tfstate -o json://result.json
+$ driftctl gen-driftignore -i result.json --exclude-unmanaged > .driftignore
+```
+
+You can filter which kind of resource you want to ignore using these flags :
+
+- `--exclude-unmanaged` : Exclude resources not managed by IaC
+- `--exclude-missing` : Exclude resources missing on cloud provider
+- `--exclude-changed` : Exclude resources that changed from IaC
+
+## Using Docker
+
+Run a scan with JSON output enabled:
+
+```
+$ docker run -it --rm \
+  -v ~/.aws:/root/.aws:ro \
+  -v $(pwd):/app \
+  -v ~/.driftctl:/root/.driftctl \
+  -e AWS_PROFILE=cloudskiff-demo \
+  -e AWS_REGION=us-east-1 \
+  cloudskiff/driftctl scan --from tfstate://**/*.tfstate --output json://drifts.json
+[...]
+```
+
+Finally generate the `.driftignore` file from the JSON:
+
+```
+$ docker run -it --rm \
+  -v ~/.aws:/root/.aws:ro \
+  -v $(pwd):/app \
+  -v ~/.driftctl:/root/.driftctl \
+  -e AWS_PROFILE=cloudskiff-demo \
+  -e AWS_REGION=us-east-1 \
+  cloudskiff/driftctl gen-driftignore -i drifts.json > .driftignore
+[...]
+```
