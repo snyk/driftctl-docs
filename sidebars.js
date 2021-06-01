@@ -13,6 +13,7 @@ module.exports = {
           Commands: [
             "usage/cmd/scan-usage",
             "usage/cmd/completion-usage",
+            "usage/cmd/gen-driftignore-usage",
           ],
         },
         {
