@@ -39,7 +39,7 @@ const config = {
           ],
         },
         {
-          href: "https://discord.gg/NMCBxtD7Nd",
+          href: "https://discord.gg/7zHQ8r2PgP",
           label: "Discord",
           position: "right",
           "aria-label": "Discord server",
