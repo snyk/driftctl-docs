@@ -21,6 +21,7 @@ Scan resources from the input Terraform statefile and compare it to your current
 | [`--to`](#--to "to") | `DCTL_TO` | `aws+tf` |
 | [`--quiet`](#--quiet "quiet") | `DCTL_QUIET` | `false` |
 | [`--strict`](#--strict "strict") | `DCTL_STRICT` | `false` |
+| [`--tf-provider-version`](#--tf-provider-version "tf-provider-version") | `DCTL_TF_PROVIDER_VERSION` |  |
 
 ## --from
 
@@ -297,4 +298,25 @@ For now, resources include:
 ```shell
 # Enable the strict mode
 $ driftctl scan --strict
+```
+
+## --tf-provider-version
+
+You can specify a terraform provider version to use. If none, driftctl uses defaults from the table below:
+
+| provider | version |
+| :- | :-: |
+| aws | 3.19.0 |
+| github | 4.4.0 |
+
+### Usage
+
+```shell
+# I use terraform provider 3.43.0 so I can use this provider with driftctl to avoid scan errors
+# driftctl will scan with an AWS terraform provider v3.43.0
+$ DCTL_TF_PROVIDER_VERSION=3.43.0 driftctl scan
+
+# Same parameter is used for every cloud provider
+# driftctl will scan with a GitHub terraform provider v4.10.1
+$ DCTL_TF_PROVIDER_VERSION=4.10.1 driftctl scan --to github+tf
 ```
