@@ -22,6 +22,7 @@ Scan resources from the input Terraform statefile and compare it to your current
 | [`--quiet`](#--quiet "quiet") | `DCTL_QUIET` | `false` |
 | [`--strict`](#--strict "strict") | `DCTL_STRICT` | `false` |
 | [`--tf-provider-version`](#--tf-provider-version "tf-provider-version") | `DCTL_TF_PROVIDER_VERSION` |  |
+| [`--driftignore`](#--driftignore "driftignore") | `DCTL_DRIFTIGNORE` | `.driftignore` |
 
 ## --from
 
@@ -319,4 +320,19 @@ $ DCTL_TF_PROVIDER_VERSION=3.43.0 driftctl scan
 # Same parameter is used for every cloud provider
 # driftctl will scan with a GitHub terraform provider v4.10.1
 $ DCTL_TF_PROVIDER_VERSION=4.10.1 driftctl scan --to github+tf
+```
+
+## --driftignore
+
+The default name for a driftignore file is `.driftignore`. If for some reasons you want to use a custom filename, you can do so using the `--driftignore` flag. This is especially useful when you have multiple driftignore files, where each of them represent a particular use case.
+
+:::note
+You can use only one driftignore file at once.
+:::
+
+### Usage
+
+```shell
+# Apply ignore directives from the /path/to/driftignore file
+$ driftctl scan --driftignore /path/to/driftignore
 ```
