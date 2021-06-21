@@ -23,6 +23,7 @@ Scan resources from the input Terraform statefile and compare it to your current
 | [`--strict`](#--strict "strict") | `DCTL_STRICT` | `false` |
 | [`--tf-provider-version`](#--tf-provider-version "tf-provider-version") | `DCTL_TF_PROVIDER_VERSION` |  |
 | [`--driftignore`](#--driftignore "driftignore") | `DCTL_DRIFTIGNORE` | `.driftignore` |
+| [`--config-dir`](#--config-dir "config-dir") | `DCTL_CONFIG_DIR` | `$HOME` |
 
 ## --from
 
@@ -335,4 +336,17 @@ You can use only one driftignore file at once.
 ```shell
 # Apply ignore directives from the /path/to/driftignore file
 $ driftctl scan --driftignore /path/to/driftignore
+```
+
+## --config-dir
+
+You can change the directory path that driftctl uses for configuration. By default, it is the `$HOME` directory.
+
+This can be useful, for example, if you want to invoke driftctl in an AWS Lambda function where you can only use the `/tmp` folder.
+
+### Usage
+
+```shell
+$ driftctl scan --config-dir path_to_driftctl_config_dir
+$ DCTL_CONFIG_DIR=path_to_driftctl_config_dir driftctl scan
 ```
