@@ -1,0 +1,24 @@
+---
+id: intro
+title: Introduction
+---
+
+driftctl can be viewed as a drift monitoring tool, and thus, it needs to run continuously to detect new drifts.
+We have identified two main workflows:
+
+- A scheduled execution of driftctl to actively monitor drifts as they happen
+- An integrated driftctl to secure GitOps workflow
+
+## Scheduled run
+
+One of the biggest problem with drifts in an IaC managed infrastructure is to be able to know where do these drifts come from and from whom.
+It can be someone that has updated a parameter and forgot to report it to IaC code, a script that has messed up something, etc ...
+Although driftctl cannot identify precisely the initiator, you can catch the "when" by scheduling regularly driftctl.
+Some CI/CD systems can allow you to run scheduled jobs, driftctl team strongly advises you to run driftctl regularly to identify your drifts ASAP.
+
+## GitOps workflow
+
+driftctl can be integrated in your existing GitOps flow to secure terraform operations against uncontrolled drifts.
+You can find below an example of a typical GitOps workflow with driftctl integrated.
+
+![gitops_flow](../assets/ci_cd/gitops_flow.svg)
