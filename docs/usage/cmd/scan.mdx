@@ -130,9 +130,9 @@ You can find more information about the GitLab managed Terraform State on the [G
 
 driftctl supports multiple kinds of output formats and by default uses the standard output (console).
 
-### Console
-
 Environment: `DCTL_OUTPUT`
+
+### Console
 
 #### Usage
 
@@ -230,6 +230,22 @@ $ DCTL_OUTPUT=json://result.json driftctl scan
   "coverage": 33
 }
 ```
+
+### HTML
+
+#### Usage
+
+You can now visualize your scan results in your browser with the HTML output:
+
+```shell
+$ driftctl scan --output html://output.html # Will output results to ./output.html
+$ DCTL_OUTPUT=html://output.html driftctl scan
+```
+
+#### Screenshots
+
+![Output HTML With Drifts](../../assets/output_html_1.png)
+![Output HTML Without Drifts](../../assets/output_html_2.png)
 
 ### Computed Fields
 
