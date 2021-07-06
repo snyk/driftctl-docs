@@ -22,6 +22,21 @@ You can now use driftctl by overriding the profile setting.
 $ AWS_PROFILE=driftctlrole driftctl scan
 ```
 
+# Custom credentials to read a state on an S3 backend
+
+If you want to use a different set of AWS credentials to read your state on S3, you can override each specific AWS environment variable with the DCTL_S3_ prefix. The purpose here is to have the choice to read a state in a different region than your infrastructure. Please don't forget to use your usual AWS credentials to read the resources of your actual infrastructure.
+
+```
+# Export a dedicated AWS named profile (or any other AWS environment variables) to read your state in your S3 backend
+$ export DCTL_S3_PROFILE="s3reader"
+# Export the usual driftctl AWS named profile
+$ export AWS_PROFILE="driftctlrole"
+$ driftctl scan --from tfstate+s3://mybucket/terraform.tfstate
+
+# You can also use a specific region to authenticate to the S3 bucket
+$ DCTL_S3_REGION=us-east-1 driftctl scan --from tfstate+s3://mybucket/terraform.tfstate
+```
+
 ## Terraform custom role
 
 You will find below our custom role that you can assume to run driftctl written in HCL.
