@@ -1,0 +1,54 @@
+---
+id: gen-driftignore-usage
+title: .driftignore generator
+---
+
+Some people do not have the goal of reaching a 100% IAC coverage with their infrastructure. And for them, driftctl can be annoying to continuously deliver drift notifications on resources they don't care. For this use case, there's a solution.
+
+You can start using driftctl with a clean state, by ignoring all the current resources that are not yet under control. driftctl provides a command to automatically generate a .driftignore file from a previous scan given the type of resources you want to exclude (e.g. unmanaged, missing or changed resources). This command parses a JSON input from a given file and sends output to stdout.
+
+```shell
+# Ignore all current drifts
+$ driftctl scan -o json://stdout | driftctl gen-driftignore -i /dev/stdin
+
+# Changed resources will be excluded
+$ driftctl scan --from tfstate://state1.tfstate -o json://stdout | driftctl gen-driftignore -i /dev/stdin --exclude-changed
+
+# Unmanaged resources will be excluded, output sent to .driftignore file
+$ driftctl scan --from tfstate://state1.tfstate -o json://result.json
+$ driftctl gen-driftignore -i result.json --exclude-unmanaged > .driftignore
+```
+
+You can filter which kind of resource you want to ignore using these flags:
+
+- `--exclude-unmanaged` : Exclude resources not managed by IaC
+- `--exclude-missing` : Exclude resources missing on cloud provider
+- `--exclude-changed` : Exclude resources that changed from IaC
+
+## Using Docker
+
+Run a scan with JSON output enabled:
+
+```
+$ docker run -it --rm \
+  -v ~/.aws:/root/.aws:ro \
+  -v $(pwd):/app \
+  -v ~/.driftctl:/root/.driftctl \
+  -e AWS_PROFILE=cloudskiff-demo \
+  -e AWS_REGION=us-east-1 \
+  cloudskiff/driftctl scan --from tfstate://**/*.tfstate --output json://drifts.json
+[...]
+```
+
+Finally, generate the `.driftignore` file from the JSON:
+
+```
+$ docker run -it --rm \
+  -v ~/.aws:/root/.aws:ro \
+  -v $(pwd):/app \
+  -v ~/.driftctl:/root/.driftctl \
+  -e AWS_PROFILE=cloudskiff-demo \
+  -e AWS_REGION=us-east-1 \
+  cloudskiff/driftctl gen-driftignore -i drifts.json > .driftignore
+[...]
+```
