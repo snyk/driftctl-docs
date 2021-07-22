@@ -21,6 +21,7 @@ Scan resources from the input Terraform statefile and compare it to your current
 | [`--to`](#--to "to") | `DCTL_TO` | `aws+tf` |
 | [`--quiet`](#--quiet "quiet") | `DCTL_QUIET` | `false` |
 | [`--strict`](#--strict "strict") | `DCTL_STRICT` | `false` |
+| [`--deep`](#--deep "deep") | `DCTL_DEEP` | `false` |
 | [`--tf-provider-version`](#--tf-provider-version "tf-provider-version") | `DCTL_TF_PROVIDER_VERSION` |  |
 | [`--driftignore`](#--driftignore "driftignore") | `DCTL_DRIFTIGNORE` | `.driftignore` |
 | [`--config-dir`](#--config-dir "config-dir") | `DCTL_CONFIG_DIR` | `$HOME` |
@@ -316,6 +317,32 @@ For now, resources include:
 ```shell
 # Enable the strict mode
 $ driftctl scan --strict
+```
+
+## --deep
+
+⚠️ This is **EXPERIMENTAL**
+
+:::warning
+Enabling deep mode while using a Terraform state as IaC source can lead to unexpected behaviors: false positive drifts, undetected drifts.
+:::
+
+Deep mode enables resources details retrieval. It was the original driftctl behavior.
+
+In **deep** mode we compare resources details to expected ones (like a terraform plan).
+In **non-deep** mode (the default one) we only enumerate resources and display which ones are out of IaC scope.
+
+Since it overlaps the new `terraform plan` behavior (as of Terraform 0.15 it shows diffs between your state and the remote) we moved the original behavior under the `--deep` **experimental** flag.
+
+:::info
+If you use a version of driftctl prior to 0.13, the deep mode was the default behavior. If you want to keep the old behavior in a newer version you have to enable the deep mode flag.
+:::
+
+### Usage
+
+```shell
+# Enable the deep mode
+$ driftctl scan --deep
 ```
 
 ## --tf-provider-version
