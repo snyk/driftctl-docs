@@ -6,6 +6,15 @@ slug: /
 
 driftctl is CLI tool that measures infrastructure as code coverage, and tracks infrastructure drift.
 
+```console
+Found 79 resource(s)
+ - 8% coverage
+ - 7 resource(s) managed by Terraform
+     - 1/7 resource(s) out of sync with Terraform state
+ - 72 resource(s) not managed by Terraform
+ - 0 resource(s) found in a Terraform state but missing on the cloud provider
+```
+
 ## Why driftctl?
 
 Infrastructure as code is awesome, but there are too many moving parts: codebase, state file, actual cloud state. Things tend to drift.
