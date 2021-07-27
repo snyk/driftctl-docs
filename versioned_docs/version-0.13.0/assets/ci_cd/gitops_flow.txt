@@ -1,0 +1,20 @@
+# Can be edited on https://flowchart.js.org
+st=>start
+e=>end
+fmt=>operation: terraform fmt
+validate=>operation: terraform validate
+driftctl=>operation: driftctl|invalid
+plan=>operation: terraform plan
+apply=>operation: terraform apply
+cond=>condition: Success
+approve=>condition: Plan approved ?
+io=>inputoutput: catch something...
+para=>parallel: parallel tasks
+
+st->para(path1, right)->validate->cond
+st->para(path2, left)->fmt->cond
+st->para(path3, bottom)->driftctl->cond
+cond(yes)->plan
+plan->approve
+approve(yes)->apply
+apply->end
