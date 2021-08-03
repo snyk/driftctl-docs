@@ -189,7 +189,12 @@ $ DCTL_OUTPUT=json://result.json driftctl scan
     // list of resources found in IaC and in sync with remote
     {
       "id": "driftctl-bucket-test-1",
-      "type": "aws_s3_bucket"
+      "type": "aws_s3_bucket",
+      "source": { // Source encapsulates metadata explaining where the resource is coming from within an IaC
+        "source": "tfstate://terraform.tfstate", // Represents the Terraform state file
+        "namespace": "module", // If you use Terraform module, it will be displayed here
+        "internal_name": "my_name" // Represents the internal Terraform resource's name
+      }
     }
   ],
   "unmanaged": [
