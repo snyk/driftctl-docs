@@ -32,6 +32,7 @@ module.exports = {
         {
           AWS: ["providers/aws/authentication", "providers/aws/resources"],
           GitHub: ["providers/github/authentication", "providers/github/resources"],
+          Google: ["providers/google/authentication", "providers/google/resources"],
         },
       ],
     },
