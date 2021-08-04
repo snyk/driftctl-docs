@@ -1,0 +1,20 @@
+---
+id: disable-telemetry
+title: Disable telemetry
+---
+
+By default, driftctl sends telemetry data to help us improve the product.
+You can find below a sample of what data are collected by driftctl.
+
+```json
+{
+    "version": "0.7.1",
+    "os": "linux",
+    "arch": "amd64",
+    "total_resources": 100,
+    "total_managed": 10,
+    "duration": 300 // analysis time in seconds
+}
+```
+
+To disable this behavior, either use the flag `--disable-telemetry` or define the environment variable `DCTL_DISABLE_TELEMETRY=true`.
