@@ -24,7 +24,7 @@ $ AWS_PROFILE=driftctlrole driftctl scan
 
 ## Custom credentials to read a state on an S3 backend
 
-If you want to use a different set of AWS credentials to read your state on S3, you can override each specific AWS environment variable with the DCTL_S3_ prefix. The purpose here is to have the choice to read a state in a different region than your infrastructure. Please don't forget to use your usual AWS credentials to read the resources of your actual infrastructure.
+If you want to use a different set of AWS credentials to read your state on S3, you can override each specific AWS environment variable with the `DCTL_S3_` prefix. The purpose here is to have the choice to read a state in a different region than your infrastructure. Please don't forget to use your usual AWS credentials to read the resources of your actual infrastructure.
 
 ```
 # Export a dedicated AWS named profile (or any other AWS environment variables) to read your state in your S3 backend
