@@ -92,6 +92,11 @@ const config = {
             to: `/${latestVersion}/providers/github/authentication`,
             from: '/github/policy',
           },
+          // TODO uncomment this once the new version released
+          // {
+          //   to: `/${latestVersion}/providers/google/authentication`,
+          //   from: '/google/policy',
+          // },
         ],
       },
     ],
