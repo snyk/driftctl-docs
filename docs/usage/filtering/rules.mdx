@@ -22,6 +22,10 @@ Filter are applied on a normalized struct which contains the following fields:
 - **Id**: Id of the resource, e.g. `my-bucket-name`
 - **Attr**: Contains every resource attributes (check `pkg/resource/aws/aws_s3_bucket.go` for a full list of supported attributes of a bucket)
 
+:::caution
+If you want to filter on `Attr` you should enable deep mode otherwise you will not have access to resource's details.
+:::
+
 ### Examples
 
 ```shell
@@ -34,10 +38,10 @@ $ driftctl scan --filter $'Type==\'aws_s3_bucket\''
 $ driftctl scan --filter $'Type==\'aws_s3_bucket\' && Id!=\'my-bucket-name\''
 
 # Ignore buckets that have tags terraform equal to 'false'
-$ driftctl scan --filter $'!(Type==\'aws_s3_bucket\' && Attr.Tags.terraform==\'false\')'
+$ driftctl scan --deep --filter $'!(Type==\'aws_s3_bucket\' && Attr.Tags.terraform==\'false\')'
 
 # Ignore buckets that don't have tag terraform
-$ driftctl scan --filter $'!(Type==\'aws_s3_bucket\' && Attr.Tags != null && !contains(keys(Attr.Tags), \'terraform\'))'
+$ driftctl scan --deep --filter $'!(Type==\'aws_s3_bucket\' && Attr.Tags != null && !contains(keys(Attr.Tags), \'terraform\'))'
 
 # Ignore buckets with an ID prefix of 'terraform-'
 $ driftctl scan --filter $'!(Type==\'aws_s3_bucket\' && starts_with(Id, \'terraform-\'))'
@@ -46,5 +50,5 @@ $ driftctl scan --filter $'!(Type==\'aws_s3_bucket\' && starts_with(Id, \'terraf
 $ driftctl scan --filter $'!(Type==\'aws_s3_bucket\' && ends_with(Id, \'-test\'))'
 
 # Ignore GitHub archived repositories
-driftctl scan --to github+tf --filter '!(Attr.Archived)'
+driftctl scan --to github+tf --deep --filter '!(Attr.Archived)'
 ```
