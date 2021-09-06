@@ -4,13 +4,20 @@ title: Authentication
 ---
 
 To use driftctl, we need credentials to make authenticated requests to your GCP project.
-Just like the Terraform provider, we retrieve configuration from [environment variables](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/provider_reference#full-reference).
+
+:::info service account
+Since driftctl use Cloud Asset API, using a service account is **mandatory**.
+:::
+
+Please refer to [official documentation](https://cloud.google.com/docs/authentication/production) to setup a proper service account.
 
 ```shell
 $ GOOGLE_APPLICATION_CREDENTIALS=your-creds.json\
   CLOUDSDK_CORE_PROJECT=my-project\
   driftctl scan --to gcp+tf
 ```
+
+You can use any env var from [google cloud sdk environment variable](https://cloud.google.com/sdk/docs/properties#setting_properties_via_environment_variables).
 
 ## Least privileged policy
 
