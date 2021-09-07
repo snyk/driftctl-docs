@@ -14,7 +14,12 @@ $ GOOGLE_APPLICATION_CREDENTIALS=your-creds.json\
 
 ## Least privileged policy
 
-driftctl uses **Google Asset API** to enumerate efficiency resources on your account, and thus you need at least the role [Cloud Asset Viewer](https://cloud.google.com/iam/docs/understanding-roles#cloud-asset-roles) to be enabled.
+driftctl uses [Google Asset API](https://console.cloud.google.com/apis/api/cloudasset.googleapis.com/overview) to enumerate efficiently resources on your account.
+Be sure to have enabled it for the GCP project you are using.
+
+![enable_api](./img/enable_api.png)
+
+To be able to enumerate resources, you need at least the role [Cloud Asset Viewer](https://cloud.google.com/iam/docs/understanding-roles#cloud-asset-roles).
 
 :::info deep mode
 If you want to use driftctl with deep mode, driftctl will also need to retrieve resource's details and the **Cloud Asset Viewer** will not be enough.
