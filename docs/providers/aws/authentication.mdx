@@ -153,7 +153,9 @@ data "aws_iam_policy_document" "policy" {
       "dynamodb:ListTagsOfResource",
       "dynamodb:DescribeTimeToLive",
       "dynamodb:DescribeTableReplicaAutoScaling",
-      "dynamodb:DescribeContinuousBackups"
+      "dynamodb:DescribeContinuousBackups",
+      "rds:DescribeDBClusters",
+      "rds:DescribeGlobalClusters"
     ]
     resources = ["*"]
   }
@@ -322,7 +324,9 @@ As AWS documentation recommends, the below policy is granting only the permissio
                 "dynamodb:ListTagsOfResource",
                 "dynamodb:DescribeTimeToLive",
                 "dynamodb:DescribeTableReplicaAutoScaling",
-                "dynamodb:DescribeContinuousBackups"
+                "dynamodb:DescribeContinuousBackups",
+                "rds:DescribeDBClusters",
+                "rds:DescribeGlobalClusters"
             ]
         }
     ]
