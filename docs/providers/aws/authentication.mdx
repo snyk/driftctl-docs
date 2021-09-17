@@ -59,6 +59,7 @@ data "aws_iam_policy_document" "policy" {
   statement {
     effect = "Allow"
     actions   = [
+      "apigateway:GET",
       "cloudformation:DescribeStacks",
       "cloudformation:GetTemplate",
       "cloudfront:GetDistribution",
@@ -232,6 +233,7 @@ As AWS documentation recommends, the below policy is granting only the permissio
             "Effect": "Allow",
             "Resource": "*",
             "Action": [
+                "apigateway:GET",
                 "cloudformation:DescribeStacks",
                 "cloudformation:GetTemplate",
                 "cloudfront:GetDistribution",
