@@ -20,7 +20,7 @@ Filter are applied on a normalized struct which contains the following fields:
 
 - **Type**: Type of the resource, e.g. `aws_s3_bucket`
 - **Id**: Id of the resource, e.g. `my-bucket-name`
-- **Attr**: Contains every resource attributes (check `pkg/resource/aws/aws_s3_bucket.go` for a full list of supported attributes of a bucket)
+- **Attr**: Contains every resource attributes (check [terraform attributes reference](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#attributes-reference) for a full list of supported attributes of a bucket)
 
 :::caution
 If you want to filter on `Attr` you should enable deep mode otherwise you will not have access to resource's details.
