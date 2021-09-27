@@ -42,10 +42,6 @@ aws_lambda_function.my-lambda-name.last_modified
 
 The above mechanism to ignore resources can be used in combination with filter rules. Bear in mind that if the same resource is included by a filter rule and excluded inside the .driftignore file, driftctl will just ignore this resource.
 
-## Precedence over resources scan
-
-.driftignore rules are applied after the resources are scanned. Thus, you cannot prevent a resource to be fetched using it.
-
 ## Automatically generate a driftignore file
 
 See [driftignore generator command](../cmd/gen-driftignore-usage).
