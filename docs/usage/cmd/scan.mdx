@@ -404,3 +404,17 @@ This can be useful, for example, if you want to invoke driftctl in an AWS Lambda
 $ driftctl scan --config-dir path_to_driftctl_config_dir
 $ DCTL_CONFIG_DIR=path_to_driftctl_config_dir driftctl scan
 ```
+
+## --tf-lockfile
+
+By default, driftctl tries to read a Terraform lock file (`.terraform.lock.hcl`) in the current directory, so driftctl can automatically detect which provider to use, according to the `--to` flag. You can specify a custom path for that file using the `--tf-lockfile` flag. If parsing the lockfile fails for some reason, errors will be logged and scan will continue.
+
+:::info
+Note that when using both `--tf-lockfile` and `--tf-provider-version` flags together, `--tf-provider-version` will simply take precedence overall.
+:::
+
+### Usage
+
+```shell
+$ driftctl scan --to aws+tf --tf-lockfile path/to/.terraform.lock.hcl
+```
