@@ -158,7 +158,8 @@ data "aws_iam_policy_document" "policy" {
       "dynamodb:DescribeTableReplicaAutoScaling",
       "dynamodb:DescribeContinuousBackups",
       "rds:DescribeDBClusters",
-      "rds:DescribeGlobalClusters"
+      "rds:DescribeGlobalClusters",
+      "application-autoscaling:DescribeScheduledActions"
     ]
     resources = ["*"]
   }
