@@ -1,0 +1,220 @@
+---
+id: kubernetes
+title: Kubernetes
+---
+
+As demonstrated with continuous integration systems, driftctl can be scheduled to be run on a regular basis. Kubernetes also has a dedicated resource for this called [`CronJob`](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/). In this example, we will perform a scan against a AWS account.
+
+## Basic example
+
+### Prerequisites
+
+- Kubernetes 1.20+
+
+If you use Kubernetes below v1.20, you can still use the CronJob resource definition but should tweak the specs according to the documentation since this feature became stable as of v1.20. Check the [Kubernetes website](https://kubernetes.io/docs/home/) for more information.
+
+### Create a dedicated namespace
+
+You may want to create driftctl-related resources under a dedicated namespace. Here we will simply name our namespace `driftctl`.
+
+```shell
+$ kubectl apply -f - <<EOF
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+      name: driftctl
+EOF
+```
+
+### Secrets and config maps
+
+The simpliest way to handle cloud credentials is to store them base64 encoded in a Secret.
+
+```shell
+$ kubectl apply -f - <<EOF
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: driftctl-cron-secret
+      namespace: driftctl
+    data:
+      AWS_ACCESS_KEY_ID: "<base64>"
+      AWS_SECRET_ACCESS_KEY: "<base64>"
+    type: Opaque
+EOF
+```
+
+You may want to use a driftignore file to ignore some resources. We can mount a .driftignore file using a config map :
+
+```shell
+$ kubectl apply -f - <<EOF
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: driftctl-cron-files-cm
+      namespace: driftctl
+    data:
+      .driftignore: |
+        *
+        !aws_s3_bucket.*
+EOF
+```
+
+### Cron job
+
+In the actual CronJob definition, we define a couple of specs :
+
+- The job will run hourly
+- Concurrency is forbidden
+- driftctl options will be defined as environment variables
+
+```shell
+$ kubectl apply -f - <<EOF
+    apiVersion: batch/v1
+    kind: CronJob
+    metadata:
+      name: driftctl-cron
+      namespace: driftctl
+    spec:
+      schedule: "0 */1 * * *"
+      concurrencyPolicy: Replace
+      failedJobsHistoryLimit: 3
+      successfulJobsHistoryLimit: 1
+      jobTemplate:
+        spec:
+          template:
+            spec:
+              containers:
+                - name: driftctl
+                  image: cloudskiff/driftctl:v0.15.0
+                  imagePullPolicy: IfNotPresent
+                  command:
+                    - driftctl
+                    - scan
+                  volumeMounts:
+                    - mountPath: /app
+                      name: driftctl-files
+                  envFrom:
+                    - secretRef:
+                        name: driftctl-cron-secret
+                  env:
+                    - name: AWS_REGION
+                      value: us-east-1
+                    - name: AWS_ROLE_ARN
+                      value: "<role_arn>"
+                    - name: DCTL_FROM
+                      value: "tfstate+s3://<bucket>/terraform.tfstate"
+                    - name: DCTL_TO
+                      value: "aws+tf"
+                    - name: DCTL_TF_PROVIDER_VERSION
+                      value: "3.62.0"
+                    - name: DCTL_DRIFTIGNORE
+                      value: "/app/.driftignore"
+                    - name: DCTL_OUTPUT
+                      value: "console:///dev/stdout"
+              restartPolicy: Never
+              volumes:
+                - name: driftctl-files
+                  configMap:
+                    name: driftctl-cron-files-cm
+                    items:
+                      - key: ".driftignore"
+                        path: ".driftignore"
+EOF
+```
+
+### Full example
+
+Here's what we obtain if we gather all definitions together in a single file :
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: driftctl
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: driftctl-cron-secret
+  namespace: driftctl
+data:
+  AWS_ACCESS_KEY_ID: "<base64>"
+  AWS_SECRET_ACCESS_KEY: "<base64>"
+type: Opaque
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: driftctl-cron-files-cm
+  namespace: driftctl
+data:
+  .driftignore: |
+    *
+    !aws_s3_bucket.*
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: driftctl-cron
+  namespace: driftctl
+spec:
+  schedule: "0 */1 * * *"
+  concurrencyPolicy: Replace
+  failedJobsHistoryLimit: 3
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: driftctl
+              image: cloudskiff/driftctl:v0.15.0
+              imagePullPolicy: IfNotPresent
+              command:
+                - driftctl
+                - scan
+              volumeMounts:
+                - mountPath: /app
+                  name: driftctl-files
+              envFrom:
+                - secretRef:
+                    name: driftctl-cron-secret
+              env:
+                - name: LOG_LEVEL
+                  value: DEBUG
+                - name: AWS_REGION
+                  value: us-east-1
+                - name: AWS_ROLE_ARN
+                  value: "<role_arn>"
+                - name: DCTL_FROM
+                  value: "tfstate+s3://<bucket>/terraform.tfstate"
+                - name: DCTL_TO
+                  value: "aws+tf"
+                - name: DCTL_TF_PROVIDER_VERSION
+                  value: "3.62.0"
+                - name: DCTL_DRIFTIGNORE
+                  value: "/app/.driftignore"
+                - name: DCTL_OUTPUT
+                  value: "console:///dev/stdout"
+          restartPolicy: Never
+          volumes:
+            - name: driftctl-files
+              configMap:
+                name: driftctl-cron-files-cm
+                items:
+                  - key: ".driftignore"
+                    path: ".driftignore"
+```
+
+Put this in a new YAML file and apply it using kubectl :
+
+```shell
+cat driftctl.yaml | kubectl apply -f -
+```
+
+## Generating HTML reports
+
+When a scan succeed, you may want to store the report somewhere permanently for human reading. In this example we will create an HTML report out of a driftctl scan and upload it to a remote S3 bucket using the AWS CLI.
+
+...
