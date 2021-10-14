@@ -28,7 +28,15 @@ EOF
 
 ### Secrets and config maps
 
-The simpliest way to handle cloud credentials is to store them base64 encoded in a Secret.
+The simpliest way to handle cloud credentials is to store them into a Secret. In order to do that you must encode the values in base64. You can that from the command line like so :
+
+```shell
+# Flag -n ensures no trailing newline is added to the output
+$ echo -n "<value>" | base64
+PHZhbHVlPg==
+```
+
+Then create your secret :
 
 ```shell
 $ kubectl apply -f - <<EOF
@@ -40,11 +48,12 @@ $ kubectl apply -f - <<EOF
     data:
       AWS_ACCESS_KEY_ID: "<base64>"
       AWS_SECRET_ACCESS_KEY: "<base64>"
+      AWS_ROLE_ARN: "<base64>"
     type: Opaque
 EOF
 ```
 
-You may want to use a driftignore file to ignore some resources. We can mount a .driftignore file using a config map :
+You may also want to use a driftignore file to ignore some resources. We can mount a .driftignore file using a config map :
 
 ```shell
 $ kubectl apply -f - <<EOF
@@ -100,8 +109,6 @@ $ kubectl apply -f - <<EOF
                   env:
                     - name: AWS_REGION
                       value: us-east-1
-                    - name: AWS_ROLE_ARN
-                      value: "<role_arn>"
                     - name: DCTL_FROM
                       value: "tfstate+s3://<bucket>/terraform.tfstate"
                     - name: DCTL_TO
@@ -141,6 +148,7 @@ metadata:
 data:
   AWS_ACCESS_KEY_ID: "<base64>"
   AWS_SECRET_ACCESS_KEY: "<base64>"
+  AWS_ROLE_ARN: "<base64>"
 type: Opaque
 ---
 apiVersion: v1
@@ -181,12 +189,8 @@ spec:
                 - secretRef:
                     name: driftctl-cron-secret
               env:
-                - name: LOG_LEVEL
-                  value: DEBUG
                 - name: AWS_REGION
                   value: us-east-1
-                - name: AWS_ROLE_ARN
-                  value: "<role_arn>"
                 - name: DCTL_FROM
                   value: "tfstate+s3://<bucket>/terraform.tfstate"
                 - name: DCTL_TO
@@ -213,8 +217,11 @@ Put this in a new YAML file and apply it using kubectl :
 cat driftctl.yaml | kubectl apply -f -
 ```
 
-## Generating HTML reports
+A job will then be triggered once per hour.
 
-When a scan succeed, you may want to store the report somewhere permanently for human reading. In this example we will create an HTML report out of a driftctl scan and upload it to a remote S3 bucket using the AWS CLI.
+## What's next ?
 
-...
+Here's what you can do next to improve your worklow :
+
+- Add a container that will upload the scan result somewhere for later human reading
+- Run an homemade application that will take the scan result and alert you when your infrastructure is not in sync
