@@ -22,7 +22,8 @@ You can use any env var from [google cloud sdk environment variable](https://clo
 ## Least privileged policy
 
 driftctl uses [Google Asset API](https://console.cloud.google.com/apis/api/cloudasset.googleapis.com/overview) to enumerate efficiently resources on your account.
-Be sure to have enabled it for the GCP project you are using.
+It also uses [Cloud Resource Manager API](https://console.cloud.google.com/marketplace/product/google/cloudresourcemanager.googleapis.com) to enumerate project IAM Resources.
+Be sure to have enabled these APIs for the GCP project you are using.
 
 ![enable_api](./img/enable_api.png)
 
