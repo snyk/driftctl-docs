@@ -9,14 +9,14 @@ You can start using driftctl with a clean state, by ignoring all the current res
 
 ```shell
 # Ignore all current drifts
-$ driftctl scan -o json://stdout | driftctl gen-driftignore -i /dev/stdin
+$ driftctl scan -o json://stdout | driftctl gen-driftignore -o -
 
 # Changed resources will be excluded
-$ driftctl scan --from tfstate://state1.tfstate -o json://stdout | driftctl gen-driftignore -i /dev/stdin --exclude-changed
+$ driftctl scan --from tfstate://state1.tfstate -o json://stdout | driftctl gen-driftignore --exclude-changed -o -
 
 # Unmanaged resources will be excluded, output sent to .driftignore file
 $ driftctl scan --from tfstate://state1.tfstate -o json://result.json
-$ driftctl gen-driftignore -i result.json --exclude-unmanaged > .driftignore
+$ driftctl gen-driftignore -i result.json --exclude-unmanaged
 ```
 
 You can filter which kind of resource you want to ignore using these flags:
@@ -49,6 +49,6 @@ $ docker run -it --rm \
   -v ~/.driftctl:/root/.driftctl \
   -e AWS_PROFILE=cloudskiff-demo \
   -e AWS_REGION=us-east-1 \
-  cloudskiff/driftctl gen-driftignore -i drifts.json > .driftignore
+  cloudskiff/driftctl gen-driftignore -i drifts.json
 [...]
 ```
