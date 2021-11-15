@@ -67,10 +67,17 @@ $ driftctl scan --from tfstate+s3://path/to/**/*.tfstate
 # You can use the --headers option if you need to add extra headers to the request (e.g: for authentication purposes)
 $ driftctl scan --from tfstate+https://example.com/terraform.tfstate --headers 'Authorization=Basic ...; X-Custom-Header=value'
 
-# You can also read the current state for a given workspace from Terraform Cloud/Enterprise
+# You can also read the current state for a given workspace from Terraform Cloud
 # Don't forget to provide your Terraform Cloud API token
 #
 $ driftctl scan --from tfstate+tfcloud://$WORKSPACE_ID --tfc-token $TFC_TOKEN
+
+# You can also read the current state for a given workspace from Terraform Enterprise by passing the tfc-endpoint value
+# that's specific to your Org's Terraform Enterprise installation
+# You can obtain your workspace id from the General Settings of the workspace
+# Don't forget to provide your Terraform Enterprise API token
+#
+$ driftctl scan --from tfstate+tfcloud://$WORKSPACE_ID --tfc-token $TFC_TOKEN --tfc-endpoint 'https://tfe.example.com/api/v2'
 ```
 
 ### Supported IaC sources
