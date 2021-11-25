@@ -85,6 +85,7 @@ $ driftctl scan --from tfstate+tfcloud://$WORKSPACE_ID --tfc-token $TFC_TOKEN --
 - Terraform state
 - Local: `--from tfstate://terraform.tfstate`
 - S3: `--from tfstate+s3://my-bucket/path/to/state.tfstate`
+- GCS: `--from tfstate+gs://my-bucket/path/to/state.tfstate`
 - HTTPS: `--from tfstate+https://my-url/state.tfstate`
 - Terraform Cloud / Terraform Enterprise: `--from tfstate+tfcloud://WORKSPACE_ID`
 
