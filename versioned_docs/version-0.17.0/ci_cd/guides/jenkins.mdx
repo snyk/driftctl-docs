@@ -1,0 +1,77 @@
+---
+id: jenkins
+title: Jenkins
+---
+
+You can integrate driftctl in Jenkins and within your GitOps workflow to get something like this:
+
+![success](../../assets/ci_cd/jenkins/success.png)
+
+In this kind of workflow if a new drift happens it will block your pipeline execution:
+
+![failure](../../assets/ci_cd/jenkins/failure.png)
+
+You can also setup a scheduled job to detect drifts as they happen, in the screenshot below it schedules a scan every hour:
+
+![schedule](../../assets/ci_cd/jenkins/schedule.png)
+
+
+## Full example
+
+Below you can find a full Jenkinsfile example with a complete GitOps workflow example and a driftctl scan.
+
+```json
+# ====================
+# Classic GitOps workflow
+# ====================
+
+pipeline {
+	agent any
+	environment {
+		AWS_DEFAULT_REGION="us-east-1"
+		AWS_ACCESS_KEY_ID=credentials("AWS_ACCESS_KEY_ID")
+		AWS_SECRET_ACCESS_KEY=credentials("AWS_SECRET_ACCESS_KEY")
+		PATH="$PATH:$HOME/dctlenv/bin/"
+	}
+	stages {
+		stage("Init") {
+			steps {
+				sh "terraform init"
+			}
+		}
+		stage('Validate') {
+			failFast true
+			parallel {
+				stage("driftctl") {
+					steps {
+						sh "which dctlenv || git clone https://github.com/wbeuil/dctlenv"
+						sh "dctlenv use latest"
+						sh "driftctl scan"
+					}
+				}
+				stage("terraform/fmt") {
+					steps {
+						sh "terraform fmt -check -diff"
+					}
+				}
+				stage("terraform/validate") {
+					steps {
+						sh "terraform validate"
+					}
+				}
+			}
+		}
+		stage("Plan") {
+			steps {
+				sh "terraform plan -out=plan.out"
+			}
+		}
+		stage("Deploy") {
+			steps {
+				sh "terraform apply -input=false plan.out"
+			}
+		}
+	}
+}
+
+```
