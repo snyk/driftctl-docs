@@ -1,0 +1,12 @@
+---
+id: version-check
+title: Version Check
+---
+
+By default, driftctl checks for a new version remotely. The request to the remote server might send the following data about your computer:
+
+- **IP Address**
+- **OS** (e.g.: linux, darwin, windows)
+- **Arch** (e.g.: amd64, i386)
+
+To disable this behavior, either use the flag `--no-version-check` or define the environment variable `DCTL_NO_VERSION_CHECK`.
