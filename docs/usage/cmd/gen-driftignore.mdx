@@ -36,7 +36,7 @@ $ docker run -it --rm \
   -v ~/.driftctl:/root/.driftctl \
   -e AWS_PROFILE=cloudskiff-demo \
   -e AWS_REGION=us-east-1 \
-  cloudskiff/driftctl scan --from tfstate://**/*.tfstate --output json://drifts.json
+  snyk/driftctl scan --from tfstate://**/*.tfstate --output json://drifts.json
 [...]
 ```
 
@@ -49,6 +49,6 @@ $ docker run -it --rm \
   -v ~/.driftctl:/root/.driftctl \
   -e AWS_PROFILE=cloudskiff-demo \
   -e AWS_REGION=us-east-1 \
-  cloudskiff/driftctl gen-driftignore -i drifts.json
+  snyk/driftctl gen-driftignore -i drifts.json
 [...]
 ```

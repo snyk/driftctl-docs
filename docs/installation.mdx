@@ -132,7 +132,7 @@ $ docker run -t --rm \
   -v $(pwd):/app:ro \
   -v ~/.driftctl:/root/.driftctl \
   -e AWS_PROFILE=non-default-profile \
-  cloudskiff/driftctl scan
+  snyk/driftctl scan
 ```
 
 `-v ~/.aws:/root/.aws:ro` (optionally) mounts your `~/.aws` containing AWS credentials and profile
