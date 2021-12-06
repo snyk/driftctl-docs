@@ -26,7 +26,7 @@ jobs:
       AWS_DEFAULT_REGION: us-east-1
     steps:
       - name: Run driftctl
-        uses: cloudskiff/driftctl-action@v1
+        uses: snyk/driftctl-action@v1
         env:
           DCTL_FILTER: "Type=='aws_instance'"
         with:
@@ -68,7 +68,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run driftctl
-        uses: cloudskiff/driftctl-action@v1
+        uses: snyk/driftctl-action@v1
         env:
           DCTL_FROM: tfstate+s3://my-path/terraform.tfstate
   plan:

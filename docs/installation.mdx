@@ -8,7 +8,7 @@ import TabItem from "@theme/TabItem";
 
 driftctl is available on Linux, macOS and Windows.
 
-Binaries are available in the [release page](https://github.com/cloudskiff/driftctl/releases).
+Binaries are available in the [release page](https://github.com/snyk/driftctl/releases).
 
 <Tabs
   defaultValue="manual"
@@ -35,13 +35,13 @@ This is an example using `curl`. If you don't have `curl`, install it, or use `w
 ```shell
 # Linux
 # x64
-$ curl -L https://github.com/cloudskiff/driftctl/releases/latest/download/driftctl_linux_amd64 -o driftctl
+$ curl -L https://github.com/snyk/driftctl/releases/latest/download/driftctl_linux_amd64 -o driftctl
 
 # x86
-$ curl -L https://github.com/cloudskiff/driftctl/releases/latest/download/driftctl_linux_386 -o driftctl
+$ curl -L https://github.com/snyk/driftctl/releases/latest/download/driftctl_linux_386 -o driftctl
 
 # macOS
-$ curl -L https://github.com/cloudskiff/driftctl/releases/latest/download/driftctl_darwin_amd64 -o driftctl
+$ curl -L https://github.com/snyk/driftctl/releases/latest/download/driftctl_darwin_amd64 -o driftctl
 ```
 
 Make the binary executable:
@@ -59,13 +59,13 @@ $ sudo mv driftctl /usr/local/bin/
 
 ## Verify digital signatures
 
-Cloudskiff releases are signed using PGP key (ed25519) with ID `ACC776A79C824EBD` and fingerprint `2776 6600 5A7F 01D4 84F6 376D ACC7 76A7 9C82 4EBD`. Our key can be retrieved from common keyservers.
+driftctl releases are signed using PGP key (ed25519) with ID `ACC776A79C824EBD` and fingerprint `2776 6600 5A7F 01D4 84F6 376D ACC7 76A7 9C82 4EBD`. Our key can be retrieved from common keyservers.
 
 ```shell
 # Download binary, checksums and signature
-$ curl -L https://github.com/cloudskiff/driftctl/releases/latest/download/driftctl_linux_amd64 -o driftctl_linux_amd64
-$ curl -L https://github.com/cloudskiff/driftctl/releases/latest/download/driftctl_SHA256SUMS -o driftctl_SHA256SUMS
-$ curl -L https://github.com/cloudskiff/driftctl/releases/latest/download/driftctl_SHA256SUMS.gpg -o driftctl_SHA256SUMS.gpg
+$ curl -L https://github.com/snyk/driftctl/releases/latest/download/driftctl_linux_amd64 -o driftctl_linux_amd64
+$ curl -L https://github.com/snyk/driftctl/releases/latest/download/driftctl_SHA256SUMS -o driftctl_SHA256SUMS
+$ curl -L https://github.com/snyk/driftctl/releases/latest/download/driftctl_SHA256SUMS.gpg -o driftctl_SHA256SUMS.gpg
 
 # Import key
 $ gpg --keyserver hkps://keys.openpgp.org --recv-keys 0xACC776A79C824EBD
@@ -85,7 +85,7 @@ $ sha256sum --ignore-missing -c driftctl_SHA256SUMS
 driftctl_linux_amd64: OK
 ```
 
-## CloudSkiff's Current PGP Public Key
+## driftctl Current PGP Public Key
 
 ```
 -----BEGIN PGP PUBLIC KEY BLOCK-----
@@ -113,9 +113,9 @@ pSVXbMUWB0hD0lSaoPcDNsNyVfzEwMXqWWLBkKZbTki+GanHkb+J
 
 ```shell
 # x64
-$ curl https://github.com/cloudskiff/driftctl/releases/latest/download/driftctl_windows_amd64.exe -o driftctl.exe
+$ curl https://github.com/snyk/driftctl/releases/latest/download/driftctl_windows_amd64.exe -o driftctl.exe
 # x86
-$ curl https://github.com/cloudskiff/driftctl/releases/latest/download/driftctl_windows_386.exe -o driftctl.exe
+$ curl https://github.com/snyk/driftctl/releases/latest/download/driftctl_windows_386.exe -o driftctl.exe
 ```
 
   </TabItem>
@@ -132,7 +132,7 @@ $ docker run -t --rm \
   -v $(pwd):/app:ro \
   -v ~/.driftctl:/root/.driftctl \
   -e AWS_PROFILE=non-default-profile \
-  cloudskiff/driftctl scan
+  snyk/driftctl scan
 ```
 
 `-v ~/.aws:/root/.aws:ro` (optionally) mounts your `~/.aws` containing AWS credentials and profile
@@ -141,9 +141,9 @@ $ docker run -t --rm \
 
 `-v ~/.driftctl:/root/.driftctl` (optionally) prevents driftctl to download the provider at each run
 
-`-e AWS_PROFILE=cloudskiff` (optionally) exports the non-default AWS profile name to use
+`-e AWS_PROFILE=your_profile` (optionally) exports the non-default AWS profile name to use
 
-`cloudskiff/driftctl:<VERSION_TAG>` run a specific driftctl tagged release
+`snyk/driftctl:<VERSION_TAG>` run a specific driftctl tagged release
 
 ## Usage examples
 
@@ -154,7 +154,7 @@ $ docker run -t --rm \
   -v ~/.driftctl:/root/.driftctl \
   -e AWS_ACCESS_KEY_ID=XXXXXXXX \
   -e AWS_SECRET_ACCESS_KEY=XXXX \
-  cloudskiff/driftctl scan
+  snyk/driftctl scan
 
 # With state stored on a s3 backend
 $ docker run -t --rm \
@@ -162,7 +162,7 @@ $ docker run -t --rm \
   -v ~/.driftctl:/root/.driftctl \
   -e AWS_ACCESS_KEY_ID=XXXXXXXX \
   -e AWS_SECRET_ACCESS_KEY=XXXX \
-  cloudskiff/driftctl scan --from tfstate+s3://my-bucket/path/to/state.tfstate
+  snyk/driftctl scan --from tfstate+s3://my-bucket/path/to/state.tfstate
 
 # With multiple states
 $ docker run -t --rm \
@@ -170,7 +170,7 @@ $ docker run -t --rm \
     -v ~/.driftctl:/root/.driftctl \
     -e AWS_ACCESS_KEY_ID=XXXXXXXX \
     -e AWS_SECRET_ACCESS_KEY=XXXX \
-    cloudskiff/driftctl scan --from tfstate://terraform_S3.tfstate --from tfstate://terraform_VPC.tfstate
+    snyk/driftctl scan --from tfstate://terraform_S3.tfstate --from tfstate://terraform_VPC.tfstate
 
 # Using a named profile
 $ docker run -t --rm \
@@ -178,7 +178,7 @@ $ docker run -t --rm \
     -v $(pwd):/app:ro \
     -v ~/.driftctl:/root/.driftctl \
     -e AWS_PROFILE=your-profile \
-    cloudskiff/driftctl scan
+    snyk/driftctl scan
 ```
 
   </TabItem>

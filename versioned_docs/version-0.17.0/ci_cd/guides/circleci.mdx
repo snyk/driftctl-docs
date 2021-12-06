@@ -3,12 +3,12 @@ id: circleci
 title: CircleCI
 ---
 
-You can integrate driftctl in CircleCI by using the [official orb](https://circleci.com/developer/orbs/orb/cloudskiff/driftctl).
+You can integrate driftctl in CircleCI by using the [official orb](https://circleci.com/developer/orbs/orb/snyk/driftctl).
 
 ```yml
 version: '2.1'
 orbs:
-  driftctl: cloudskiff/driftctl@1
+  driftctl: snyk/driftctl@1
 ```
 
 You can integrate driftctl within your GitOps workflow to get something like this:
@@ -29,7 +29,7 @@ Below you can find a full CircleCI example with a complete GitOps workflow examp
 version: '2.1'
 
 orbs:
-  driftctl: cloudskiff/driftctl@1
+  driftctl: snyk/driftctl@1
   terraform: circleci/terraform@1
 
 jobs:
