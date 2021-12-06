@@ -10,7 +10,7 @@ const config = {
   onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
-  organizationName: "cloudskiff",
+  organizationName: "snyk",
   projectName: "driftctl-docs",
   themeConfig: {
     navbar: {
@@ -51,7 +51,7 @@ const config = {
           "aria-label": "Twitter account",
         },
         {
-          href: "https://github.com/cloudskiff/driftctl",
+          href: "https://github.com/snyk/driftctl",
           label: "GitHub",
           position: "right",
           "aria-label": "GitHub repository",
@@ -60,7 +60,7 @@ const config = {
     },
     footer: {
       style: "dark",
-      copyright: `Copyright © 2020-${new Date().getFullYear()} CloudSkiff.`,
+      copyright: `Copyright © 2020-${new Date().getFullYear()} Snyk Ltd.`,
     },
     metadatas: [
       {name: 'og:type', content: 'website'},
@@ -109,7 +109,7 @@ const docs = {
   path: "./docs",
   routeBasePath: "/",
   sidebarPath: require.resolve("./sidebars.js"),
-  editUrl: "https://github.com/cloudskiff/driftctl-docs/edit/main/",
+  editUrl: "https://github.com/snyk/driftctl-docs/edit/main/",
   versions: {},
 };
 
