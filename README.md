@@ -48,3 +48,8 @@ $ npm run build
 ```
 
 The result will be put in `build/`.
+
+## Contributing
+
+Should you wish to make a contribution please open a pull request against this repository with a clear description of the change with tests demonstrating the functionality. 
+You will also need to agree to the [Contributor Agreement](https://gist.github.com/201fc2fd188b4a68973998ec30b57686) before the code can be accepted and merged.
