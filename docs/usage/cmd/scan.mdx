@@ -69,8 +69,10 @@ $ driftctl scan --from tfstate+https://example.com/terraform.tfstate --headers '
 
 # You can also read the current state for a given workspace from Terraform Cloud
 # Don't forget to provide your Terraform Cloud API token
-#
+# The Terraform Cloud integration supports both workspace ids, and workspace names
+
 $ driftctl scan --from tfstate+tfcloud://$WORKSPACE_ID --tfc-token $TFC_TOKEN
+$ driftctl scan --from tfstate+tfcloud://$ORGANIZATION_NAME/$WORKSPACE_NAME --tfc-token $TFC_TOKEN
 
 # You can also read the current state for a given workspace from Terraform Enterprise by passing the tfc-endpoint value
 # that's specific to your Org's Terraform Enterprise installation
