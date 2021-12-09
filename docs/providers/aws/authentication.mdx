@@ -160,7 +160,8 @@ data "aws_iam_policy_document" "policy" {
       "dynamodb:DescribeContinuousBackups",
       "rds:DescribeDBClusters",
       "rds:DescribeGlobalClusters",
-      "application-autoscaling:DescribeScheduledActions"
+      "application-autoscaling:DescribeScheduledActions",
+      "autoscaling:DescribeLaunchConfigurations"
     ]
     resources = ["*"]
   }
@@ -338,7 +339,8 @@ As AWS documentation recommends, the below policy is granting only the permissio
                 "rds:DescribeGlobalClusters",
                 "application-autoscaling:DescribeScalableTargets",
                 "application-autoscaling:DescribeScalingPolicies",
-                "application-autoscaling:DescribeScheduledActions"
+                "application-autoscaling:DescribeScheduledActions",
+                "autoscaling:DescribeLaunchConfigurations"
             ]
         }
     ]
