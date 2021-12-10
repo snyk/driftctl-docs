@@ -62,39 +62,42 @@ const config = {
       style: "dark",
       copyright: `Copyright © 2020-${new Date().getFullYear()} Snyk Ltd.`,
     },
-    metadatas: [
-      {name: 'og:type', content: 'website'},
-      {name: 'og:image', content: 'https://docs.driftctl.com/img/preview.png'}
+    metadata: [
+      { name: "og:type", content: "website" },
+      {
+        name: "og:image",
+        content: "https://docs.driftctl.com/img/preview.png",
+      },
     ],
   },
   plugins: [
     [
-      '@docusaurus/plugin-client-redirects',
+      "@docusaurus/plugin-client-redirects",
       {
         redirects: [
           {
             to: `/${latestVersion}/installation`,
-            from: '/installation',
+            from: "/installation",
           },
           {
             to: `/${latestVersion}/limitations`,
-            from: '/limitations',
+            from: "/limitations",
           },
           {
             to: `/${latestVersion}/ci_cd/intro`,
-            from: '/ci_cd',
+            from: "/ci_cd",
           },
           {
             to: `/${latestVersion}/providers/aws/authentication`,
-            from: '/aws/policy',
+            from: "/aws/policy",
           },
           {
             to: `/${latestVersion}/providers/github/authentication`,
-            from: '/github/policy',
+            from: "/github/policy",
           },
           {
             to: `/${latestVersion}/providers/google/authentication`,
-            from: '/google/policy',
+            from: "/google/policy",
           },
         ],
       },
