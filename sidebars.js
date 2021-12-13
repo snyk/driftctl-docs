@@ -3,7 +3,7 @@ module.exports = {
     {
       type: 'category',
       label: 'Introduction',
-      items: ["intro", "installation", "usage", "limitations"],
+      items: ['intro', 'installation', 'usage', 'limitations'],
     },
     {
       type: 'category',
@@ -11,16 +11,20 @@ module.exports = {
       items: [
         {
           Commands: [
-            "usage/cmd/scan-usage",
-            "usage/cmd/completion-usage",
-            "usage/cmd/gen-driftignore-usage",
+            'usage/cmd/scan-usage',
+            'usage/cmd/completion-usage',
+            'usage/cmd/gen-driftignore-usage',
           ],
         },
         {
-          Flags: ["usage/flags/crash-reporting", "usage/flags/version-check", "usage/flags/disable-telemetry"],
+          Flags: [
+            'usage/flags/crash-reporting',
+            'usage/flags/version-check',
+            'usage/flags/disable-telemetry',
+          ],
         },
         {
-          Filtering: ["usage/filtering/driftignore", "usage/filtering/rules"],
+          Filtering: ['usage/filtering/driftignore', 'usage/filtering/rules'],
         },
         'usage/log-level',
       ],
@@ -30,10 +34,19 @@ module.exports = {
       label: 'Providers',
       items: [
         {
-          AWS: ["providers/aws/authentication", "providers/aws/resources"],
-          GitHub: ["providers/github/authentication", "providers/github/resources"],
-          Google: ["providers/google/authentication", "providers/google/resources"],
-          Azure: ["providers/azure/authentication", "providers/azure/resources"],
+          AWS: ['providers/aws/authentication', 'providers/aws/resources'],
+          GitHub: [
+            'providers/github/authentication',
+            'providers/github/resources',
+          ],
+          Google: [
+            'providers/google/authentication',
+            'providers/google/resources',
+          ],
+          Azure: [
+            'providers/azure/authentication',
+            'providers/azure/resources',
+          ],
         },
       ],
     },
@@ -41,16 +54,16 @@ module.exports = {
       type: 'category',
       label: 'CI/CD',
       items: [
-          "ci_cd/intro",
+        'ci_cd/intro',
         {
           Guides: [
-              "ci_cd/guides/circleci",
-              "ci_cd/guides/ghaction",
-              "ci_cd/guides/gitlabci",
-              "ci_cd/guides/jenkins"
-          ]
-        }
+            'ci_cd/guides/circleci',
+            'ci_cd/guides/ghaction',
+            'ci_cd/guides/gitlabci',
+            'ci_cd/guides/jenkins',
+          ],
+        },
       ],
-    }
+    },
   ],
 };

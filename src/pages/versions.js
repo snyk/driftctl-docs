@@ -1,27 +1,27 @@
-import React from "react";
-import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import Link from "@docusaurus/Link";
-import Layout from "@theme/Layout";
-import { useVersions, useLatestVersion } from "@theme/hooks/useDocs";
+import React from 'react';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import Link from '@docusaurus/Link';
+import Layout from '@theme/Layout';
+import { useVersions, useLatestVersion } from '@theme/hooks/useDocs';
 
 const Version = () => {
   const { siteConfig } = useDocusaurusContext();
   const versions = useVersions();
   const latestVersion = useLatestVersion();
-  const currentVersion = versions.find((version) => version.name === "current");
+  const currentVersion = versions.find((version) => version.name === 'current');
   const pastVersions = versions.filter(
-    (version) => version !== latestVersion && version.name !== "current"
+    (version) => version !== latestVersion && version.name !== 'current',
   );
   const repoUrl = `https://github.com/${siteConfig.organizationName}/driftctl`;
 
   return (
-    <Layout title="Versions" description="Documentation versions for driftctl">
-      <main className="container margin-vert--lg">
+    <Layout title='Versions' description='Documentation versions for driftctl'>
+      <main className='container margin-vert--lg'>
         <h1>Documentation versions for driftctl</h1>
 
         {latestVersion && (
-          <div className="margin-bottom--lg">
-            <h3 id="latest">Current version (Latest)</h3>
+          <div className='margin-bottom--lg'>
+            <h3 id='latest'>Current version (Latest)</h3>
             <p>
               Here you can find the documentation for current released version.
             </p>
@@ -43,8 +43,8 @@ const Version = () => {
           </div>
         )}
 
-        <div className="margin-bottom--lg">
-          <h3 id="next">Next version (Unreleased)</h3>
+        <div className='margin-bottom--lg'>
+          <h3 id='next'>Next version (Unreleased)</h3>
           <p>
             Here you can find the documentation for work-in-progress unreleased
             version.
@@ -62,8 +62,8 @@ const Version = () => {
         </div>
 
         {pastVersions.length > 0 && (
-          <div className="margin-bottom--lg">
-            <h3 id="archive">Past versions</h3>
+          <div className='margin-bottom--lg'>
+            <h3 id='archive'>Past versions</h3>
             <p>
               Here you can find documentation for previous versions of driftctl.
             </p>
