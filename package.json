@@ -12,7 +12,8 @@
     "clear": "docusaurus clear",
     "versioning": "docusaurus docs:version",
     "prepare": "husky install",
-    "format": "prettier --write '**/*.{js,jsx}'"
+    "format": "prettier --check '**/*.{js,jsx}'",
+    "format:fix": "prettier --write '**/*.{js,jsx}'"
   },
   "dependencies": {
     "@docusaurus/core": "^2.0.0-beta.9",
