@@ -11,6 +11,7 @@
     "serve": "docusaurus serve",
     "clear": "docusaurus clear",
     "versioning": "docusaurus docs:version",
+    "auto-versioning": "./scripts/auto-versioning.sh",
     "prepare": "husky install",
     "format": "prettier --check '**/*.{js,jsx}'",
     "format:fix": "prettier --write '**/*.{js,jsx}'"

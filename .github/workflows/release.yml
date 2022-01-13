@@ -1,0 +1,22 @@
+name: release
+
+on:
+  repository_dispatch:
+    types: [new_version]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+          cache: 'npm'
+      - uses: bahmutov/npm-install@v1
+      - name: Create and commit new version
+        run: |
+          git config --global user.email "actions@gihub.com"
+          git config --global user.name "gh-actions"
+          npm run auto-versioning
+          git push
