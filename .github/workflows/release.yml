@@ -18,5 +18,5 @@ jobs:
         run: |
           git config --global user.email "actions@gihub.com"
           git config --global user.name "gh-actions"
-          npm run auto-versioning
+          npm run release-latest-version
           git push
