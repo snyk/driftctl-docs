@@ -1,0 +1,204 @@
+{
+  "version-0.20.0/docs": [
+    {
+      "type": "category",
+      "label": "Introduction",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-0.20.0/intro"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.20.0/installation"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.20.0/usage"
+        },
+        {
+          "type": "doc",
+          "id": "version-0.20.0/limitations"
+        }
+      ],
+      "collapsible": true,
+      "collapsed": true
+    },
+    {
+      "type": "category",
+      "label": "Usage",
+      "items": [
+        {
+          "type": "category",
+          "collapsed": true,
+          "collapsible": true,
+          "label": "Commands",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-0.20.0/usage/cmd/scan-usage"
+            },
+            {
+              "type": "doc",
+              "id": "version-0.20.0/usage/cmd/completion-usage"
+            },
+            {
+              "type": "doc",
+              "id": "version-0.20.0/usage/cmd/gen-driftignore-usage"
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "collapsed": true,
+          "collapsible": true,
+          "label": "Flags",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-0.20.0/usage/flags/crash-reporting"
+            },
+            {
+              "type": "doc",
+              "id": "version-0.20.0/usage/flags/version-check"
+            },
+            {
+              "type": "doc",
+              "id": "version-0.20.0/usage/flags/disable-telemetry"
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "collapsed": true,
+          "collapsible": true,
+          "label": "Filtering",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-0.20.0/usage/filtering/driftignore"
+            },
+            {
+              "type": "doc",
+              "id": "version-0.20.0/usage/filtering/rules"
+            }
+          ]
+        },
+        {
+          "type": "doc",
+          "id": "version-0.20.0/usage/log-level"
+        }
+      ],
+      "collapsible": true,
+      "collapsed": true
+    },
+    {
+      "type": "category",
+      "label": "Providers",
+      "items": [
+        {
+          "type": "category",
+          "collapsed": true,
+          "collapsible": true,
+          "label": "AWS",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-0.20.0/providers/aws/authentication"
+            },
+            {
+              "type": "doc",
+              "id": "version-0.20.0/providers/aws/resources"
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "collapsed": true,
+          "collapsible": true,
+          "label": "GitHub",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-0.20.0/providers/github/authentication"
+            },
+            {
+              "type": "doc",
+              "id": "version-0.20.0/providers/github/resources"
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "collapsed": true,
+          "collapsible": true,
+          "label": "Google",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-0.20.0/providers/google/authentication"
+            },
+            {
+              "type": "doc",
+              "id": "version-0.20.0/providers/google/resources"
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "collapsed": true,
+          "collapsible": true,
+          "label": "Azure",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-0.20.0/providers/azure/authentication"
+            },
+            {
+              "type": "doc",
+              "id": "version-0.20.0/providers/azure/resources"
+            }
+          ]
+        }
+      ],
+      "collapsible": true,
+      "collapsed": true
+    },
+    {
+      "type": "category",
+      "label": "CI/CD",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-0.20.0/ci_cd/intro"
+        },
+        {
+          "type": "category",
+          "collapsed": true,
+          "collapsible": true,
+          "label": "Guides",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-0.20.0/ci_cd/guides/circleci"
+            },
+            {
+              "type": "doc",
+              "id": "version-0.20.0/ci_cd/guides/ghaction"
+            },
+            {
+              "type": "doc",
+              "id": "version-0.20.0/ci_cd/guides/gitlabci"
+            },
+            {
+              "type": "doc",
+              "id": "version-0.20.0/ci_cd/guides/jenkins"
+            }
+          ]
+        }
+      ],
+      "collapsible": true,
+      "collapsed": true
+    }
+  ]
+}
