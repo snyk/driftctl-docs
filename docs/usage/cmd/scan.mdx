@@ -428,3 +428,13 @@ Note that when using both `--tf-lockfile` and `--tf-provider-version` flags toge
 ```shell
 $ driftctl scan --to aws+tf --tf-lockfile path/to/.terraform.lock.hcl
 ```
+
+## Exit codes
+
+If no drift is found and all infrastructure is in sync with the
+infrastructure-as-code state (after accounting for filters and driftignore),
+`driftctl` will exit with status 0.
+
+If drift is found, `driftctl` will exit with status 1.
+
+If any other error occurs, `driftctl` will exit with status 2.
