@@ -12,7 +12,7 @@ $ driftctl scan --from tfstate+s3://terraform.tfstate  --to github+tf --output c
 
 Scan resources from the input Terraform statefile and compare it to your current profile infrastructure.
 
-### Options
+## Options
 
 | Flag | Environment | Default |
 | :- | :-: | -: |
@@ -26,7 +26,7 @@ Scan resources from the input Terraform statefile and compare it to your current
 | [`--driftignore`](#--driftignore "driftignore") | `DCTL_DRIFTIGNORE` | `.driftignore` |
 | [`--config-dir`](#--config-dir "config-dir") | `DCTL_CONFIG_DIR` | `$HOME` |
 
-## --from
+### --from
 
 Currently, driftctl only supports reading IaC from a Terraform state.
 We are investigating to support the Terraform code as well, as a state does not represent an intention.
@@ -82,7 +82,7 @@ $ driftctl scan --from tfstate+tfcloud://$ORGANIZATION_NAME/$WORKSPACE_NAME --tf
 $ driftctl scan --from tfstate+tfcloud://$WORKSPACE_ID --tfc-token $TFC_TOKEN --tfc-endpoint 'https://tfe.example.com/api/v2'
 ```
 
-### Supported IaC sources
+#### Supported IaC sources
 
 - Terraform state
 - Local: `--from tfstate://terraform.tfstate`
@@ -98,7 +98,7 @@ $ terraform state pull > state.tfstate
 $ driftctl scan --from tfstate://state.tfstate
 ```
 
-#### S3
+##### S3
 
 driftctl needs read-only access so you could use the policy below to ensure minimal access to your state file.
 
@@ -120,7 +120,7 @@ driftctl needs read-only access so you could use the policy below to ensure mini
 }
 ```
 
-#### HTTP + GitLab
+##### HTTP + GitLab
 
 The HTTP backend supports the GitLab managed Terraform State using their API.
 
@@ -137,15 +137,15 @@ driftctl scan \
 
 You can find more information about the GitLab managed Terraform State on the [GitLab documentation website](https://docs.gitlab.com/ee/user/infrastructure/terraform_state.html).
 
-## --output
+### --output
 
 driftctl supports multiple kinds of output formats and by default uses the standard output (console).
 
 Environment: `DCTL_OUTPUT`
 
-### Console
+#### Console
 
-#### Usage
+##### Usage
 
 ```shell
 $ driftctl scan
@@ -157,7 +157,7 @@ $ DCTL_OUTPUT=console:// driftctl scan
 driftctl can write to multiple outputs at once by passing multiple `--output` flags.
 :::
 
-#### Structure
+##### Structure
 
 ```console
 Found missing resources:
@@ -177,9 +177,9 @@ Found 3 resource(s)
  - 1/1 changed outside of IaC
 ```
 
-### JSON
+#### JSON
 
-#### Usage
+##### Usage
 
 ```shell
 $ driftctl scan --output json:///tmp/result.json # Will output results to /tmp/result.json
@@ -188,7 +188,7 @@ $ driftctl scan --output json://stdout # Will output results in json to stdout d
 $ DCTL_OUTPUT=json://result.json driftctl scan
 ```
 
-#### Structure
+##### Structure
 
 ```json
 {
@@ -251,9 +251,9 @@ $ DCTL_OUTPUT=json://result.json driftctl scan
 }
 ```
 
-### HTML
+#### HTML
 
-#### Usage
+##### Usage
 
 You can now visualize your scan results in your browser with the HTML output:
 
@@ -262,12 +262,12 @@ $ driftctl scan --output html://output.html # Will output results to ./output.ht
 $ DCTL_OUTPUT=html://output.html driftctl scan
 ```
 
-#### Screenshots
+##### Screenshots
 
 ![Output HTML With Drifts](../../assets/output_html_1.png)
 ![Output HTML Without Drifts](../../assets/output_html_2.png)
 
-### Computed Fields
+#### Computed Fields
 
 From Terraform documentation, a `computed` field is often used to represent values that are not user configurable or can not be known at time of `terraform plan` or `apply`.
 
@@ -294,11 +294,11 @@ Found 1 resource(s)
 You have diffs on computed fields, check the documentation for potential false positive drifts
 ```
 
-## --to
+### --to
 
 driftctl supports multiple providers. By default it will scan against AWS, but you can change this using `--to`.
 
-### Usage
+#### Usage
 
 Environment: `DCTL_TO`
 
@@ -310,7 +310,7 @@ $ driftctl scan --to aws+tf
 $ DCTL_TO=github+tf driftctl scan
 ```
 
-### Supported Providers
+#### Supported Providers
 
 driftctl supports these providers:
 
@@ -319,11 +319,11 @@ driftctl supports these providers:
 - `gcp+tf`
 - `azure+tf`
 
-## --quiet
+### --quiet
 
 This flag prevents stdout to be use for anything but the scan result.
 
-## --strict
+### --strict
 
 When running driftctl against an AWS account, you may experience unnecessary noises with resources that don't belong to you. It can be the case if you have an organization account in which you will by default have a service-linked role associated to your account (e.g. AWSServiceRoleForOrganizations). For now, driftctl ignores those service-linked resources by default.
 
@@ -333,14 +333,14 @@ For now, resources include:
 
 - Service-linked AWS IAM roles, including their policies and policy attachments
 
-### Usage
+#### Usage
 
 ```shell
 # Enable the strict mode
 $ driftctl scan --strict
 ```
 
-## --deep
+### --deep
 
 ⚠️ This is **EXPERIMENTAL**
 
@@ -359,14 +359,14 @@ Since it overlaps the new `terraform plan` behavior (as of Terraform 0.15 it sho
 If you use a version of driftctl prior to 0.13, the deep mode was the default behavior. If you want to keep the old behavior in a newer version you have to enable the deep mode flag.
 :::
 
-### Usage
+#### Usage
 
 ```shell
 # Enable the deep mode
 $ driftctl scan --deep
 ```
 
-## --tf-provider-version
+### --tf-provider-version
 
 You can specify a terraform provider version to use. If none, driftctl uses defaults from the table below:
 
@@ -375,7 +375,7 @@ You can specify a terraform provider version to use. If none, driftctl uses defa
 | aws | 3.19.0 |
 | github | 4.4.0 |
 
-### Usage
+#### Usage
 
 ```shell
 # I use terraform provider 3.43.0 so I can use this provider with driftctl to avoid scan errors
@@ -387,7 +387,7 @@ $ DCTL_TF_PROVIDER_VERSION=3.43.0 driftctl scan
 $ DCTL_TF_PROVIDER_VERSION=4.10.1 driftctl scan --to github+tf
 ```
 
-## --driftignore
+### --driftignore
 
 The default name for a driftignore file is `.driftignore`. If for some reason you want to use a custom filename, you can do so using the `--driftignore` flag. This is especially useful when you have multiple driftignore files, where each of them represents a particular use case.
 
@@ -395,27 +395,27 @@ The default name for a driftignore file is `.driftignore`. If for some reason yo
 You can use only one driftignore file at once.
 :::
 
-### Usage
+#### Usage
 
 ```shell
 # Apply ignore directives from the /path/to/driftignore file
 $ driftctl scan --driftignore /path/to/driftignore
 ```
 
-## --config-dir
+### --config-dir
 
 You can change the directory path that driftctl uses for configuration. By default, it is the `$HOME` directory.
 
 This can be useful, for example, if you want to invoke driftctl in an AWS Lambda function where you can only use the `/tmp` folder.
 
-### Usage
+#### Usage
 
 ```shell
 $ driftctl scan --config-dir path_to_driftctl_config_dir
 $ DCTL_CONFIG_DIR=path_to_driftctl_config_dir driftctl scan
 ```
 
-## --tf-lockfile
+### --tf-lockfile
 
 By default, driftctl tries to read a Terraform lock file (`.terraform.lock.hcl`) in the current directory, so driftctl can automatically detect which provider to use, according to the `--to` flag. You can specify a custom path for that file using the `--tf-lockfile` flag. If parsing the lockfile fails for some reason, errors will be logged and scan will continue.
 
@@ -423,8 +423,18 @@ By default, driftctl tries to read a Terraform lock file (`.terraform.lock.hcl`)
 Note that when using both `--tf-lockfile` and `--tf-provider-version` flags together, `--tf-provider-version` will simply take precedence overall.
 :::
 
-### Usage
+#### Usage
 
 ```shell
 $ driftctl scan --to aws+tf --tf-lockfile path/to/.terraform.lock.hcl
 ```
+
+## Exit codes
+
+If no drift is found and all infrastructure is in sync with the
+infrastructure-as-code state (after accounting for filters and driftignore),
+`driftctl` will exit with status 0.
+
+If drift is found, `driftctl` will exit with status 1.
+
+If any other error occurs, `driftctl` will exit with status 2.
