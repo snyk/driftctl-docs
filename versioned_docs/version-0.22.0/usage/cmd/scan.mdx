@@ -25,6 +25,8 @@ Scan resources from the input Terraform statefile and compare it to your current
 | [`--tf-provider-version`](#--tf-provider-version "tf-provider-version") | `DCTL_TF_PROVIDER_VERSION` |  |
 | [`--driftignore`](#--driftignore "driftignore") | `DCTL_DRIFTIGNORE` | `.driftignore` |
 | [`--config-dir`](#--config-dir "config-dir") | `DCTL_CONFIG_DIR` | `$HOME` |
+| [`--only-managed`](#--only-managed "only-managed") | `DCTL_ONLY_MANAGED` | `false` |
+| [`--only-unmanaged`](#--only-unmanaged "only-unmanaged") | `DCTL_ONLY_UNMANAGED` | `false` |
 
 ### --from
 
@@ -451,6 +453,59 @@ Note that when using both `--tf-lockfile` and `--tf-provider-version` flags toge
 
 ```shell
 $ driftctl scan --to aws+tf --tf-lockfile path/to/.terraform.lock.hcl
+```
+
+### --only-managed
+
+This flag allows you to output only resources that are managed by your IaC.
+
+:::info
+Note that this flag will also output your missing resources in the scan report.
+
+Please be aware that this flag relies on `--deep` mode supported resources only.
+
+Another limitation in its current state is that you will be subject to rate limits by your Cloud Provider since we still enumerate all resources before reading resources details.
+:::
+
+#### Usage
+
+```shell
+$ driftctl scan --only-managed
+
+Found missing resources:
+  - vol-1234567890 (aws_ebs_volume)
+  From tfstate://terraform.tfstate
+    - i-1234567890 (aws_instance.bar)
+Found changed resources:
+  From tfstate://terraform.tfstate
+    - i-0987654321 (aws_instance.foo):
+        ~ instance_type: "t2.nano" => "t2.micro"
+Found 4 resource(s)
+ - 50% coverage
+ - 2 resource(s) managed by Terraform
+     - 1/2 resource(s) out of sync with Terraform state
+ - 2 resource(s) found in a Terraform state but missing on the cloud provider
+```
+
+### --only-unmanaged
+
+This flag allows you to output only resources that are not managed by your IaC.
+
+#### Usage
+
+```shell
+$ driftctl scan --only-unmanaged
+
+Found resources not covered by IaC:
+  aws_iam_policy_attachment:
+    - AWSServiceRoleForAPIGateway-arn:aws:iam::aws:policy/aws-service-role/APIGatewayServiceRolePolicy
+    - AWSServiceRoleForAWSCloud9-arn:aws:iam::aws:policy/aws-service-role/AWSCloud9ServiceRolePolicy
+  aws_iam_role:
+    - custom-role
+Found 5 resource(s)
+ - 40% coverage
+ - 2 resource(s) managed by Terraform
+ - 3 resource(s) not managed by Terraform
 ```
 
 ## Exit codes
