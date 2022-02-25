@@ -80,6 +80,12 @@ $ driftctl scan --from tfstate+tfcloud://$ORGANIZATION_NAME/$WORKSPACE_NAME --tf
 # Don't forget to provide your Terraform Enterprise API token
 #
 $ driftctl scan --from tfstate+tfcloud://$WORKSPACE_ID --tfc-token $TFC_TOKEN --tfc-endpoint 'https://tfe.example.com/api/v2'
+
+# You can use azure blob storage too
+# See below how to setup authentication for that backend
+$ driftctl scan --to azure+tf --from tfstate+azurerm://my-container/terraform.tfstate
+# Blob patterns are also supported
+$ driftctl scan --to azure+tf --from tfstate+azurerm://my-container/states/**
 ```
 
 #### Supported IaC sources
@@ -90,6 +96,7 @@ $ driftctl scan --from tfstate+tfcloud://$WORKSPACE_ID --tfc-token $TFC_TOKEN --
 - GCS: `--from tfstate+gs://my-bucket/path/to/state.tfstate`
 - HTTPS: `--from tfstate+https://my-url/state.tfstate`
 - Terraform Cloud / Terraform Enterprise: `--from tfstate+tfcloud://WORKSPACE_ID`
+- Azure blob storage: `--from tfstate+azurerm://container-name/path/to/state.tfstate`
 
 You can use any unsupported backend by using `terraform` to pipe your state in a file and then use this file with driftctl:
 
@@ -136,6 +143,23 @@ driftctl scan \
 ```
 
 You can find more information about the GitLab managed Terraform State on the [GitLab documentation website](https://docs.gitlab.com/ee/user/infrastructure/terraform_state.html).
+
+##### Azure blob storage
+
+To be able to access state from azure blob storage, you have to define these two environment variables
+
+```shell
+$ export AZURE_STORAGE_ACCOUNT=...
+$ export AZURE_STORAGE_KEY=...
+$ driftctl scan --from tfstate+azurerm://my-container/terraform.tfstate
+
+# You can also use inline flags
+$ driftctl scan --azurerm-storage-account 'storageaccountname' --azurerm-account-key 'key' --from tfstate+azurerm://my-container/terraform.tfstate
+```
+
+You can find theses values in your Azure console here:
+
+![azure_storage_account_keys](../../assets/cmd/scan/azure_storage_account_keys.png)
 
 ### --output
 
