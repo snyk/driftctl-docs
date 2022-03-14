@@ -1,25 +1,65 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.22.1
+version: v1.22.2
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   SNYK-JS-CSSWHAT-1298035:
     - '*':
-        reason: no known entry point for this vulnearbilty to be reached
-        expires: 2022-01-09T13:28:36.959Z
-        created: 2021-12-10T13:28:36.962Z
+        reason: Introduced by @docusaurus but we can't update it to the latest because of https://github.com/themgoncalves/react-loadable-ssr-addon/pull/31, which is blocked by https://github.com/facebook/docusaurus/issues/6246.
+        expires: 2022-04-10T16:45:55.775Z
+        created: 2022-03-11T16:45:55.784Z
   SNYK-JS-NTHCHECK-1586032:
     - '*':
-        reason: no known entry point for this vulnearbilty to be reached
-        expires: 2022-01-09T13:28:55.027Z
-        created: 2021-12-10T13:28:55.040Z
+        reason: Introduced by @docusaurus but we can't update it to the latest because of https://github.com/themgoncalves/react-loadable-ssr-addon/pull/31, which is blocked by https://github.com/facebook/docusaurus/issues/6246.
+        expires: 2022-04-10T16:44:06.898Z
+        created: 2022-03-11T16:44:06.903Z
   SNYK-JS-PATHPARSE-1077067:
     - '*':
-        reason: no known entry point for this vulnearbilty to be reached
-        expires: 2022-01-09T13:29:04.127Z
-        created: 2021-12-10T13:29:04.159Z
+        reason: Introduced by @docusaurus but we can't update it to the latest because of https://github.com/themgoncalves/react-loadable-ssr-addon/pull/31, which is blocked by https://github.com/facebook/docusaurus/issues/6246.
+        expires: 2022-04-10T16:44:46.604Z
+        created: 2022-03-11T16:44:46.609Z
   SNYK-JS-TRIM-1017038:
     - '*':
-        reason: no known entry point for this vulnearbilty to be reached
-        expires: 2022-01-09T13:29:13.105Z
-        created: 2021-12-10T13:29:13.115Z
+        reason: Introduced by @docusaurus but we can't update it to the latest because of https://github.com/themgoncalves/react-loadable-ssr-addon/pull/31, which is blocked by https://github.com/facebook/docusaurus/issues/6246.
+        expires: 2022-04-10T16:43:47.450Z
+        created: 2022-03-11T16:43:47.455Z
+  SNYK-JS-SHELLJS-2332187:
+    - '*':
+        reason: Introduced by @docusaurus but we can't update it to the latest because of https://github.com/themgoncalves/react-loadable-ssr-addon/pull/31, which is blocked by https://github.com/facebook/docusaurus/issues/6246.
+        expires: 2022-04-10T16:43:56.210Z
+        created: 2022-03-11T16:43:56.215Z
+  SNYK-JS-FOLLOWREDIRECTS-2332181:
+    - '*':
+        reason: Introduced by @docusaurus but we can't update it to the latest because of https://github.com/themgoncalves/react-loadable-ssr-addon/pull/31, which is blocked by https://github.com/facebook/docusaurus/issues/6246.
+        expires: 2022-04-10T16:44:18.429Z
+        created: 2022-03-11T16:44:18.436Z
+  SNYK-JS-NODEFORGE-2330875:
+    - '*':
+        reason: Introduced by @docusaurus but we can't update it to the latest because of https://github.com/themgoncalves/react-loadable-ssr-addon/pull/31, which is blocked by https://github.com/facebook/docusaurus/issues/6246.
+        expires: 2022-04-10T16:44:34.392Z
+        created: 2022-03-11T16:44:34.397Z
+  SNYK-JS-PRISMJS-2404333:
+    - '*':
+        reason: Introduced by @docusaurus but we can't update it to the latest because of https://github.com/themgoncalves/react-loadable-ssr-addon/pull/31, which is blocked by https://github.com/facebook/docusaurus/issues/6246.
+        expires: 2022-04-10T16:44:56.185Z
+        created: 2022-03-11T16:44:56.190Z
+  SNYK-JS-NODEFETCH-2342118:
+    - '*':
+        reason: Introduced by @docusaurus but we can't update it to the latest because of https://github.com/themgoncalves/react-loadable-ssr-addon/pull/31, which is blocked by https://github.com/facebook/docusaurus/issues/6246.
+        expires: 2022-04-10T16:45:05.025Z
+        created: 2022-03-11T16:45:05.032Z
+  SNYK-JS-NODEFORGE-2331908:
+    - '*':
+        reason: Introduced by @docusaurus but we can't update it to the latest because of https://github.com/themgoncalves/react-loadable-ssr-addon/pull/31, which is blocked by https://github.com/facebook/docusaurus/issues/6246.
+        expires: 2022-04-10T16:45:36.320Z
+        created: 2022-03-11T16:45:36.326Z
+  SNYK-JS-NANOID-2332193:
+    - '*':
+        reason: Introduced by @docusaurus but we can't update it to the latest because of https://github.com/themgoncalves/react-loadable-ssr-addon/pull/31, which is blocked by https://github.com/facebook/docusaurus/issues/6246.
+        expires: 2022-04-10T16:45:46.952Z
+        created: 2022-03-11T16:45:46.958Z
+  SNYK-JS-FOLLOWREDIRECTS-2396346:
+    - '*':
+        reason: Introduced by @docusaurus but we can't update it to the latest because of https://github.com/themgoncalves/react-loadable-ssr-addon/pull/31, which is blocked by https://github.com/facebook/docusaurus/issues/6246.
+        expires: 2022-04-10T16:46:05.448Z
+        created: 2022-03-11T16:46:05.453Z
 patch: {}
