@@ -1,0 +1,47 @@
+---
+id: driftignore
+title: .driftignore
+---
+
+**.driftignore** is a simple way to ignore resources, you put resources in a `.driftignore` file like a `.gitignore`.
+
+If you need only to exclude a set of resources you should use .driftignore, if you need something more advanced, check filter rules.
+
+Create the .driftignore file where you launch driftctl (usually the root of your IaC repo).
+
+Each line must be of kind
+
+- `resource_type.resource_id`, resource_id could be a wildcard to exclude all resources of a given type.
+- `resource_type.resource_id.path.to.field_name`, resource_id can be wildcard to ignore a drift on given field for a given type, path could also contain wildcards.
+
+The .driftignore file also supports negation of rules. This way you could ignore everything except certain types.
+
+For example, if you want to ignore everything but IAM drifts:
+
+```ignore
+*
+!aws_iam_*
+```
+
+### Examples
+
+```ignore
+# Will ignore S3 bucket called my-bucket
+aws_s3_bucket.my-bucket
+# Will ignore every aws_instance resource
+aws_instance.*
+# Will ignore environment for all lambda functions
+aws_lambda_function.*.environment
+# Will ignore resources like aws_iam_role.AmazonSSMRoleForInstances and aws_iam_role.AWSServiceRoleForAmazonSSM
+*role.*Amazon*
+# Will ignore lastModified for my-lambda-name lambda function
+aws_lambda_function.my-lambda-name.last_modified
+```
+
+## Precedence over filter rules
+
+The above mechanism to ignore resources can be used in combination with filter rules. Bear in mind that if the same resource is included by a filter rule and excluded inside the .driftignore file, driftctl will just ignore this resource.
+
+## Automatically generate a driftignore file
+
+See [driftignore generator command](../cmd/gen-driftignore-usage).
