@@ -1,0 +1,86 @@
+---
+id: ghaction
+title: GitHub Action
+---
+
+You can run a full driftctl scan in your GitHub Actions workflow by using the [official action](https://github.com/marketplace/actions/driftctl-action).
+
+## Scheduled example
+
+Below you can find a GitHub Actions workflow example with a scheduled run of driftctl.
+
+```yml
+name: driftctl
+
+on:
+  # Triggers driftctl every 10 minutes
+  schedule:
+    - cron: "*/10 * * * *"
+
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: us-east-1
+    steps:
+      - name: Run driftctl
+        uses: snyk/driftctl-action@v1
+        env:
+          DCTL_FILTER: "Type=='aws_instance'"
+        with:
+          version: 0.6.0
+```
+
+## GitOps example
+
+Below you can find a GitOps GitHub Actions workflow example.
+
+```yml
+name: gitops
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: us-east-1
+
+jobs:
+  validate-fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+      - name: Terraform Init
+        run: terraform init
+      - name: Terraform Format
+        run: terraform fmt -check
+      - name: Terraform Validate
+        run: terraform validate
+  driftctl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run driftctl
+        uses: snyk/driftctl-action@v1
+        env:
+          DCTL_FROM: tfstate+s3://my-path/terraform.tfstate
+  plan:
+    needs: [validate-fmt, driftctl]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+      - name: Terraform Init
+        run: terraform init
+      - name: Terraform Plan
+        run: terraform plan
+```
