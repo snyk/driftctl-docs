@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from '@docusaurus/router';
-import { useLatestVersion } from '@theme/hooks/useDocs';
+import { useLatestVersion } from '@docusaurus/plugin-content-docs/client';
 
 const DeepMode = () => {
   const latestVersion = useLatestVersion();
