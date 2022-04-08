@@ -1,0 +1,54 @@
+---
+id: rules
+title: Filter Rules
+---
+
+:::info
+Filter rules can be used not only to **scan** resources, but also to **ignore** resources.
+
+You can indeed use both inclusion and exclusion logics.
+:::
+
+**Filter rules** allow you to build complex expression to include and exclude a set of resources in your workflow.
+Powered by expression language [JMESPath](https://jmespath.org/) you could build a complex include and exclude expression.
+
+Filter rules could be passed to `scan` cmd with `--filter` flag.
+You could also use the environment variable `DCTL_FILTER`.
+Filter rules syntax in use is actually [JMESPath](https://jmespath.org/specification.html).
+
+Filter are applied on a normalized struct which contains the following fields:
+
+- **Type**: Type of the resource, e.g. `aws_s3_bucket`
+- **Id**: Id of the resource, e.g. `my-bucket-name`
+- **Attr**: Contains every resource attributes (check [terraform attributes reference](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#attributes-reference) for a full list of supported attributes of a bucket)
+
+:::caution
+If you want to filter on `Attr` you should enable deep mode otherwise you will not have access to resource's details.
+:::
+
+### Examples
+
+```shell
+# Will include only S3 bucket in the search
+$ driftctl scan --filter "Type=='aws_s3_bucket'"
+# OR (beware of escape your shell special chars between double quotes)
+$ driftctl scan --filter $'Type==\'aws_s3_bucket\''
+
+# Excludes only s3 bucket named 'my-bucket-name'
+$ driftctl scan --filter $'Type==\'aws_s3_bucket\' && Id!=\'my-bucket-name\''
+
+# Ignore buckets that have tags terraform equal to 'false'
+$ driftctl scan --deep --filter $'!(Type==\'aws_s3_bucket\' && Attr.tags.terraform==\'false\')'
+
+# Ignore buckets that don't have tag terraform
+$ driftctl scan --deep --filter $'!(Type==\'aws_s3_bucket\' && Attr.tags != null && !contains(keys(Attr.tags), \'terraform\'))'
+
+# Ignore buckets with an ID prefix of 'terraform-'
+$ driftctl scan --filter $'!(Type==\'aws_s3_bucket\' && starts_with(Id, \'terraform-\'))'
+
+# Ignore buckets with an ID suffix of '-test'
+$ driftctl scan --filter $'!(Type==\'aws_s3_bucket\' && ends_with(Id, \'-test\'))'
+
+# Ignore GitHub archived repositories
+driftctl scan --to github+tf --deep --filter '!(Attr.Archived)'
+```

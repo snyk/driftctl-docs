@@ -1,0 +1,203 @@
+---
+id: installation
+title: Installation
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+driftctl is available on Linux, macOS and Windows.
+
+Binaries are available in the [release page](https://github.com/snyk/driftctl/releases).
+
+<Tabs
+  defaultValue="manual"
+  values={[
+    { label: "Manual", value: "manual" },
+    { label: "Docker", value: "docker" },
+    { label: "Homebrew", value: "homebrew" },
+    { label: "Macports", value: "macports" },
+  ]}
+>
+  <TabItem value="manual">
+
+<Tabs
+  defaultValue="linux-macos"
+  values={[
+    { label: "Linux / macOS", value: "linux-macos" },
+    { label: "Windows", value: "windows" },
+  ]}
+>
+  <TabItem value="linux-macos">
+
+This is an example using `curl`. If you don't have `curl`, install it, or use `wget`.
+
+```shell
+# Linux
+# x64
+$ curl -L https://github.com/snyk/driftctl/releases/latest/download/driftctl_linux_amd64 -o driftctl
+
+# x86
+$ curl -L https://github.com/snyk/driftctl/releases/latest/download/driftctl_linux_386 -o driftctl
+
+# macOS
+$ curl -L https://github.com/snyk/driftctl/releases/latest/download/driftctl_darwin_amd64 -o driftctl
+```
+
+Make the binary executable:
+
+```shell
+$ chmod +x driftctl
+```
+
+Optionally install driftctl to a central location in your `PATH`:
+
+```shell
+# use any path that suits you, this is just a standard example. Install sudo if needed.
+$ sudo mv driftctl /usr/local/bin/
+```
+
+## Verify digital signatures
+
+driftctl releases are signed using PGP key (ed25519) with ID `ACC776A79C824EBD` and fingerprint `2776 6600 5A7F 01D4 84F6 376D ACC7 76A7 9C82 4EBD`. Our key can be retrieved from common keyservers.
+
+```shell
+# Download binary, checksums and signature
+$ curl -L https://github.com/snyk/driftctl/releases/latest/download/driftctl_linux_amd64 -o driftctl_linux_amd64
+$ curl -L https://github.com/snyk/driftctl/releases/latest/download/driftctl_SHA256SUMS -o driftctl_SHA256SUMS
+$ curl -L https://github.com/snyk/driftctl/releases/latest/download/driftctl_SHA256SUMS.gpg -o driftctl_SHA256SUMS.gpg
+
+# Import key
+$ gpg --keyserver hkps://keys.openpgp.org --recv-keys 0xACC776A79C824EBD
+gpg: key ACC776A79C824EBD: public key "Cloudskiff <security@cloudskiff.com>" imported
+gpg: Total number processed: 1
+gpg:               imported: 1
+
+# Verify signature (optionally trust the key from gnupg to avoid any warning)
+$ gpg --verify driftctl_SHA256SUMS.gpg driftctl_SHA256SUMS
+gpg: Signature made jeu. 04 févr. 2021 14:58:06 CET
+gpg:                using EDDSA key 277666005A7F01D484F6376DACC776A79C824EBD
+gpg:                issuer "security@cloudskiff.com"
+gpg: Good signature from "Cloudskiff <security@cloudskiff.com>" [ultimate]
+
+# Verify checksum
+$ sha256sum --ignore-missing -c driftctl_SHA256SUMS
+driftctl_linux_amd64: OK
+```
+
+## driftctl Current PGP Public Key
+
+```
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+xjMEYBv2ABYJKwYBBAHaRw8BAQdAstkQggX4bNXmfdiy+Cn6XrQLk0GNx+s4hbvuOi6DBS7NJENs
+b3Vkc2tpZmYgPHNlY3VyaXR5QGNsb3Vkc2tpZmYuY29tPsKQBBMWCAA4FiEEJ3ZmAFp/AdSE9jdt
+rMd2p5yCTr0FAmAb9gACGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQrMd2p5yCTr3CCgEA
+5kYdx5TMTHUJXwVs64QpQB5neN41y7EEnD7zWoZUMxcBAOeZxVsR6VZQENhpBpFcSJDSHAK6KDdr
+BYc2FpRDXQ4GwsFcBBABCgAGBQJgHBbYAAoJEDma9pCSxye2z4MQALniFM6VuVuDvP8wjpUixIFl
+H+Z702+VZU01hfQu27C0jR3WFDPlmRf4biqLD6NV4jfcWIUcAh19uRnHH31if2u4Ij4ZLB6uhm1C
+fcI0NLxyCvTorriA6Bf8rtt+iZ7K6nlolc2ZKJsQe6l2O3E0zC5WQlawjKKjjbjjA6C2CxFwcYib
+cmGobqIhTFHwta4sL9icFpEdt30XnVrJ1JHzEdYxK2YUoAJXyuPRH9Z9MbjJXL+uT98cigtOLdM2
+G/KCrWCrMS7lUznAvsJJ8Pova3dyT4d1AoVXPnKhOp0t4GPX5x4SRIe2QexvNEIoScXfQrxsONWL
+PkAVttALmfrveCgTESyBIw57Xe1wHOJmYrIkrMXNljBO2cC8DHkRKgo6xDOFmGfvBhQdUIiSe3/8
+bXbVnWjpjWhhIAoSMJBpPFWnFs+AlOk+BjYf/CMKf5eLuCSBF+JIGaulGDxhVdVcyBjp2FFw9FBs
+0tELKfds8OmXi2JzVT+K4oXNjRca9UwCmqhntkTOdOKMls/q9fCkVGxSiLKLGNr+fuU/1q9MISHi
+HqAiERT0cBjBFgr15Fn+hkpiSoDitaTZWoAfAQynnlh7WFXXPD2LQwk5lg3SkC0czSkacaaAoRCW
+pSVXbMUWB0hD0lSaoPcDNsNyVfzEwMXqWWLBkKZbTki+GanHkb+J
+=dbR5
+-----END PGP PUBLIC KEY BLOCK-----
+```
+
+  </TabItem>
+  <TabItem value="windows">
+
+```shell
+# x64
+$ curl https://github.com/snyk/driftctl/releases/latest/download/driftctl_windows_amd64.exe -o driftctl.exe
+# x86
+$ curl https://github.com/snyk/driftctl/releases/latest/download/driftctl_windows_386.exe -o driftctl.exe
+```
+
+  </TabItem>
+</Tabs>
+
+  </TabItem>
+  <TabItem value="docker">
+
+You can use also our official Docker image from the terminal.
+
+```shell
+$ docker run -t --rm \
+  -v ~/.aws:/root/.aws:ro \
+  -v $(pwd):/app:ro \
+  -v ~/.driftctl:/root/.driftctl \
+  -e AWS_PROFILE=non-default-profile \
+  snyk/driftctl scan
+```
+
+`-v ~/.aws:/root/.aws:ro` (optionally) mounts your `~/.aws` containing AWS credentials and profile
+
+`-v $(pwd):/app:ro` (optionally) mounts your working dir containing the terraform state
+
+`-v ~/.driftctl:/root/.driftctl` (optionally) prevents driftctl to download the provider at each run
+
+`-e AWS_PROFILE=your_profile` (optionally) exports the non-default AWS profile name to use
+
+`snyk/driftctl:<VERSION_TAG>` run a specific driftctl tagged release
+
+## Usage examples
+
+```shell
+# With a local state
+$ docker run -t --rm \
+  -v $(pwd):/app:ro \
+  -v ~/.driftctl:/root/.driftctl \
+  -e AWS_ACCESS_KEY_ID=XXXXXXXX \
+  -e AWS_SECRET_ACCESS_KEY=XXXX \
+  snyk/driftctl scan
+
+# With state stored on a s3 backend
+$ docker run -t --rm \
+  -v $(pwd):/app:ro \
+  -v ~/.driftctl:/root/.driftctl \
+  -e AWS_ACCESS_KEY_ID=XXXXXXXX \
+  -e AWS_SECRET_ACCESS_KEY=XXXX \
+  snyk/driftctl scan --from tfstate+s3://my-bucket/path/to/state.tfstate
+
+# With multiple states
+$ docker run -t --rm \
+    -v $(pwd):/app:ro \
+    -v ~/.driftctl:/root/.driftctl \
+    -e AWS_ACCESS_KEY_ID=XXXXXXXX \
+    -e AWS_SECRET_ACCESS_KEY=XXXX \
+    snyk/driftctl scan --from tfstate://terraform_S3.tfstate --from tfstate://terraform_VPC.tfstate
+
+# Using a named profile
+$ docker run -t --rm \
+    -v ~/.aws:/root/.aws:ro \ # mount your aws config folder
+    -v $(pwd):/app:ro \
+    -v ~/.driftctl:/root/.driftctl \
+    -e AWS_PROFILE=your-profile \
+    snyk/driftctl scan
+```
+
+  </TabItem>
+  <TabItem value="homebrew">
+
+Homebrew is a free and open-source package management system for Mac OS X. Install the official driftctl formula from the terminal.
+
+```shell
+$ brew install driftctl
+```
+
+  </TabItem>
+  <TabItem value="macports">
+
+MacPorts is an easy to use system for compiling, installing, and managing open source software. Install the community port from the terminal.
+
+```shell
+$ sudo port install driftctl
+```
+
+  </TabItem>
+</Tabs>
