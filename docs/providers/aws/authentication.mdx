@@ -167,7 +167,8 @@ data "aws_iam_policy_document" "policy" {
       "rds:DescribeGlobalClusters",
       "application-autoscaling:DescribeScheduledActions",
       "autoscaling:DescribeLaunchConfigurations",
-      "elasticloadbalancing:DescribeLoadBalancers"
+      "elasticloadbalancing:DescribeLoadBalancers",
+      "elasticloadbalancing:DescribeListeners"
     ]
     resources = ["*"]
   }
@@ -352,7 +353,8 @@ As AWS documentation recommends, the below policy is granting only the permissio
                 "application-autoscaling:DescribeScalingPolicies",
                 "application-autoscaling:DescribeScheduledActions",
                 "autoscaling:DescribeLaunchConfigurations",
-                "elasticloadbalancing:DescribeLoadBalancers"
+                "elasticloadbalancing:DescribeLoadBalancers",
+                "elasticloadbalancing:DescribeListeners"
             ]
         }
     ]
