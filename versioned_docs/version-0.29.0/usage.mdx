@@ -1,0 +1,30 @@
+---
+id: usage
+title: Usage
+---
+
+Be sure to have [configured](providers/aws/authentication.mdx) your AWS credentials.
+
+You will need to assign [proper permissions](providers/aws/authentication.mdx#least-privileged-policy) to allow driftctl to scan your account.
+
+```shell
+# With a local state
+$ driftctl scan
+# Same as
+$ driftctl scan --from tfstate://terraform.tfstate
+
+# To specify AWS credentials
+$ AWS_ACCESS_KEY_ID=XXX AWS_SECRET_ACCESS_KEY=XXX driftctl scan
+# or using a named profile
+$ AWS_PROFILE=profile_name driftctl scan
+
+# With state stored on a s3 backend
+$ driftctl scan --from tfstate+s3://my-bucket/path/to/state.tfstate
+
+# With multiple states
+$ driftctl scan --from tfstate://terraform_S3.tfstate --from tfstate://terraform_VPC.tfstate
+
+# Using glob pattern
+$ driftctl scan --from tfstate://path/to/**/*.tfstate
+$ driftctl scan --from tfstate+s3://path/to/**/*.tfstate
+```
