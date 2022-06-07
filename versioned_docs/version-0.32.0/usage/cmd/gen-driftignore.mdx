@@ -1,0 +1,59 @@
+---
+id: gen-driftignore-usage
+title: .driftignore generator
+---
+
+Some people do not have the goal of reaching a 100% IAC coverage with their infrastructure. And for them, driftctl can be annoying to continuously deliver drift notifications on resources they don't care. For this use case, there's a solution.
+
+You can start using driftctl with a clean state, by ignoring all the current resources that are not yet under control. driftctl provides a command to automatically generate a .driftignore file from a previous scan given the type of resources you want to exclude (e.g. unmanaged, missing or changed resources). This command parses a JSON input from a given file and sends output to stdout.
+
+```shell
+# Append all current drift to .driftignore
+$ driftctl scan -o json://stdout | driftctl gen-driftignore
+
+# Print proposed driftignore based on all current drift to stdout
+$ driftctl scan -o json://stdout | driftctl gen-driftignore -o -
+
+# Changed resources will be excluded
+$ driftctl scan --from tfstate://state1.tfstate -o json://stdout | driftctl gen-driftignore --exclude-changed
+
+# Unmanaged resources will be excluded
+# In this example, we use a file as an intermediate step instead of piping into
+# gen-driftignore
+$ driftctl scan --from tfstate://state1.tfstate -o json://result.json
+$ driftctl gen-driftignore -i result.json --exclude-unmanaged
+```
+
+You can filter which kind of resource you want to ignore using these flags:
+
+- `--exclude-unmanaged` : Exclude resources not managed by IaC
+- `--exclude-missing` : Exclude resources missing on cloud provider
+- `--exclude-changed` : Exclude resources that changed from IaC
+
+## Using Docker
+
+Run a scan with JSON output enabled:
+
+```
+$ docker run -it --rm \
+  -v ~/.aws:/root/.aws:ro \
+  -v $(pwd):/app \
+  -v ~/.driftctl:/root/.driftctl \
+  -e AWS_PROFILE=driftctl-demo \
+  -e AWS_REGION=us-east-1 \
+  snyk/driftctl scan --from tfstate://**/*.tfstate --output json://drifts.json
+[...]
+```
+
+Finally, generate the `.driftignore` file from the JSON:
+
+```
+$ docker run -it --rm \
+  -v ~/.aws:/root/.aws:ro \
+  -v $(pwd):/app \
+  -v ~/.driftctl:/root/.driftctl \
+  -e AWS_PROFILE=driftctl-demo \
+  -e AWS_REGION=us-east-1 \
+  snyk/driftctl gen-driftignore -i drifts.json
+[...]
+```
