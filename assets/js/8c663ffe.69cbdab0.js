@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[9020],{24998:function(e,t,a){a.r(t);var s=a(67294),u=a(76775),n=a(65551);t.default=function(){var e=(0,n.yW)();return s.createElement(u.l_,{to:e.path+"/usage/cmd/scan-usage#--deep"})}}}]);
