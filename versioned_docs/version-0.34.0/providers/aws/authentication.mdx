@@ -87,7 +87,7 @@ data "aws_iam_policy_document" "policy" {
       "ec2:DescribeLaunchTemplates",
       "ec2:GetEbsEncryptionByDefault",
       "ecr:DescribeRepositories",
-      "ecr:GetRepositoryPolicy"
+      "ecr:GetRepositoryPolicy",
       "ecr:ListTagsForResource",
       "elasticache:DescribeCacheClusters",
       "iam:GetPolicy",
@@ -170,7 +170,7 @@ data "aws_iam_policy_document" "policy" {
       "application-autoscaling:DescribeScheduledActions",
       "autoscaling:DescribeLaunchConfigurations",
       "elasticloadbalancing:DescribeLoadBalancers",
-      "elasticloadbalancing:DescribeListeners"
+      "elasticloadbalancing:DescribeListeners",
     ]
     resources = ["*"]
   }
@@ -358,7 +358,7 @@ As AWS documentation recommends, the below policy is granting only the permissio
                 "application-autoscaling:DescribeScheduledActions",
                 "autoscaling:DescribeLaunchConfigurations",
                 "elasticloadbalancing:DescribeLoadBalancers",
-                "elasticloadbalancing:DescribeListeners"
+                "elasticloadbalancing:DescribeListeners",
             ]
         }
     ]
