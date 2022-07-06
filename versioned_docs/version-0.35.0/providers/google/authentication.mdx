@@ -1,0 +1,46 @@
+---
+id: authentication
+title: Authentication
+---
+
+To use driftctl, we need credentials to make authenticated requests to your GCP project.
+
+:::info service account
+Since driftctl use Cloud Asset API, using a service account is **mandatory**.
+:::
+
+Please refer to [official documentation](https://cloud.google.com/docs/authentication/production) to setup a proper service account.
+
+```shell
+$ GOOGLE_APPLICATION_CREDENTIALS=your-creds.json\
+  CLOUDSDK_CORE_PROJECT=my-project\
+  driftctl scan --to gcp+tf
+```
+
+You can use any env var from [google cloud sdk environment variable](https://cloud.google.com/sdk/docs/properties#setting_properties_via_environment_variables).
+
+## Least privileged policy
+
+driftctl uses [Google Asset API](https://console.cloud.google.com/apis/api/cloudasset.googleapis.com/overview) to enumerate efficiently resources on your account.
+It also uses [Cloud Resource Manager API](https://console.cloud.google.com/marketplace/product/google/cloudresourcemanager.googleapis.com) to enumerate project IAM Resources.
+Be sure to have enabled these APIs for the GCP project you are using.
+
+![enable_api](./img/enable_api.png)
+
+To be able to enumerate resources, you need at least the role [Cloud Asset Viewer](https://cloud.google.com/iam/docs/understanding-roles#cloud-asset-roles).
+
+:::info deep mode
+If you want to use driftctl with deep mode, driftctl will also need to retrieve resource's details and the **Cloud Asset Viewer** will not be enough.
+If you want to be able to get the details you should set up the basic role [Viewer](https://cloud.google.com/iam/docs/understanding-roles#basic-definitions) on your project.
+To read your IAM policies you will also need role [iam.securityReviewer](https://cloud.google.com/iam/docs/understanding-roles#iam-roles) on your project.
+:::
+
+### Required roles
+
+```
+# Mandatory role to allow driftctl to enumerate resources
+roles/cloudasset.viewer
+
+# Required for deep mode only
+roles/viewer
+```
