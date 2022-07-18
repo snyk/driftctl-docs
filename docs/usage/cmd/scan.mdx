@@ -39,6 +39,13 @@ Multiple states can be read by passing `--from` flags. You can also use glob pat
 
 :::
 
+:::info
+
+When no state is specified for the scan, driftctl automatically reads your HCL files in the current directory as an attempt to find which state to use.
+This feature currently only works with the following backends: `local`, `gcs`, `s3`, `azurerm` as well as `cloud` configuration for Terraform Cloud.
+
+:::
+
 Example:
 
 ```shell
