@@ -17,4 +17,9 @@ ignore:
         reason: Unreachable as tool is used for static site generation
         expires: 2022-09-21T16:39:22.121Z
         created: 2022-08-22T16:39:22.127Z
+  SNYK-JS-MINIMATCH-3050818:
+    - '*':
+        reason: Not exploitable as Nuxt is used for static site generation
+        expires: 2022-10-25T17:01:31.925Z
+        created: 2022-11-25T17:01:31.933Z
 patch: {}
