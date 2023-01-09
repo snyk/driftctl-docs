@@ -59,7 +59,19 @@ $ sudo mv driftctl /usr/local/bin/
 
 ## Verify digital signatures
 
-driftctl releases are signed using PGP key (ed25519) with ID `ACC776A79C824EBD` and fingerprint `2776 6600 5A7F 01D4 84F6 376D ACC7 76A7 9C82 4EBD`. Our key can be retrieved from common keyservers.
+driftctl releases are signed using PGP key (ed25519) with fingerprint `65DD A08A A160 5FC8 211F C928 FFB5 FCAF D223 D274`. Our key can be retrieved from common keyservers.
+
+:::caution
+Since **07/01/2023** the key to sign driftctl releases has been changed because of [a security issue](https://circleci.com/blog/january-4-2023-security-alert) with CircleCI secrets.
+
+Prior to **v0.38.2** they key used to verify release was `2776 6600 5A7F 01D4 84F6376D ACC7 76A7 9C82 4EBD`
+:::
+
+**Current key**
+- Fingerprint `65DD A08A A160 5FC8 211F C928 FFB5 FCAF D223 D274`
+
+**legacy key < v0.38.2**
+- Fingerprint `2776 6600 5A7F 01D4 84F6376D ACC7 76A7 9C82 4EBD`
 
 ```shell
 # Download binary, checksums and signature
@@ -68,24 +80,34 @@ $ curl -L https://github.com/snyk/driftctl/releases/latest/download/driftctl_SHA
 $ curl -L https://github.com/snyk/driftctl/releases/latest/download/driftctl_SHA256SUMS.gpg -o driftctl_SHA256SUMS.gpg
 
 # Import key
-$ gpg --keyserver hkps://keys.openpgp.org --recv-keys 0xACC776A79C824EBD
-gpg: key ACC776A79C824EBD: public key "Cloudskiff <security@cloudskiff.com>" imported
-gpg: Total number processed: 1
-gpg:               imported: 1
+# The legacy key must be imported manually since it is now revoked on the keyservers
+$ gpg --keyserver hkps://keys.openpgp.org --recv-keys 65DDA08AA1605FC8211FC928FFB5FCAFD223D274
 
 # Verify signature (optionally trust the key from gnupg to avoid any warning)
 $ gpg --verify driftctl_SHA256SUMS.gpg driftctl_SHA256SUMS
-gpg: Signature made jeu. 04 févr. 2021 14:58:06 CET
-gpg:                using EDDSA key 277666005A7F01D484F6376DACC776A79C824EBD
-gpg:                issuer "security@cloudskiff.com"
-gpg: Good signature from "Cloudskiff <security@cloudskiff.com>" [ultimate]
 
 # Verify checksum
 $ sha256sum --ignore-missing -c driftctl_SHA256SUMS
 driftctl_linux_amd64: OK
 ```
 
-## driftctl Current PGP Public Key
+## PGP Public Key
+
+**Current**
+
+```
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+mDMEY7wXuhYJKwYBBAHaRw8BAQdAhxCEy/sUZ4SCXrHQbfzpH7t+ivMAz18YdHKR
+x6lqw8q0KVNueWsgPHRlYW0tY2xvdWQtY29uZmlnK3NlY3VyaXR5QHNueWsuaW8+
+iJkEExYKAEEWIQRl3aCKoWBfyCEfySj/tfyv0iPSdAUCY7wXugIbAwUJCWYBgAUL
+CQgHAgIiAgYVCgkICwIEFgIDAQIeBwIXgAAKCRD/tfyv0iPSdOqxAQDCBtm8dE6D
+gxmDGf0SfFzkiI+kC25GQ15noy8YqFO8+QD7BD5Atetz8Htjm21EqD4YPWXk4CkA
+4SxepihFyQpoRwY=
+=lQGW
+-----END PGP PUBLIC KEY BLOCK-----
+```
+
+**Legacy**
 
 ```
 -----BEGIN PGP PUBLIC KEY BLOCK-----
