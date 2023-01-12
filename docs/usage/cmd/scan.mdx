@@ -70,7 +70,11 @@ $ driftctl scan --from tfstate://my-states/directory/*.tfstate
 
 # Using glob pattern to recursively use any *.tfstate file.
 $ driftctl scan --from tfstate://path/to/**/*.tfstate
-$ driftctl scan --from tfstate+s3://path/to/**/*.tfstate
+$ driftctl scan --from tfstate+s3://example-bucket/*.tfstate
+$ driftctl scan --from tfstate+gs://example-bucket/**/*.tfstate
+$ driftctl scan --from tfstate+azurerm://example-container/states/*.tfstate
+
+# This works for 
 
 # We also support HTTP(s) URLs with authentication
 # the tool will fetch the file from the given URL
