@@ -29,6 +29,7 @@ jobs:
         uses: snyk/driftctl-action@v1
         env:
           DCTL_FILTER: "Type=='aws_instance'"
+          DCTL_FROM: tfstate://terraform.tfstate
         with:
           version: 0.6.0
 ```
