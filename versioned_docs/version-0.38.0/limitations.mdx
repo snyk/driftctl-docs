@@ -46,7 +46,7 @@ For example:
 
 - aws_security_group and aws_security_group_rule:
 
-For security group that has in-line egress or ingress rules, driftctl will output an alert message at the end of the scan to warn you that those rules are falsely unmanaged. The explanation is that we can't distinct, based only on the Terraform state, rules created in the console and rules created in-line in either egress or ingress blocks.
+For security group that has in-line egress or ingress rules, driftctl will output an alert message at the end of the scan to warn you that those rules are falsely unmanaged. The explanation is that we can't distinguish, based only on the Terraform state, rules created in the console and rules created in-line in either egress or ingress blocks.
 
 ### Github
 
