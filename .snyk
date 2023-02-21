@@ -12,16 +12,6 @@ ignore:
         reason: Unreachable as tool is used for static site generation
         created: 2022-01-18T14:54:43.796Z
         expires: 2023-05-04T16:15:19.065Z
-  SNYK-JS-ETA-2936803:
-    - '*':
-        reason: Unreachable as tool is used for static site generation
-        created: 2023-02-02T16:15:19.071Z
-        expires: 2023-05-04T16:15:19.065Z
-  SNYK-JS-ETA-3261240:
-    - '*':
-        reason: Unreachable as tool is used for static site generation
-        created: 2023-02-02T16:15:19.071Z
-        expires: 2023-05-04T16:15:19.065Z
   SNYK-JS-HTTPCACHESEMANTICS-3248783:
     - '*':
         reason: Unreachable as tool is used for static site generation
@@ -32,9 +22,9 @@ ignore:
         reason: Unreachable as tool is used for static site generation
         created: 2023-02-02T16:15:19.071Z
         expires: 2023-05-04T16:15:19.065Z
-  SNYK-JS-UAPARSERJS-3244450:
+  SNYK-JS-SIDEWAYFORMULA-3317169:
     - '*':
         reason: Unreachable as tool is used for static site generation
-        created: 2023-02-02T16:15:19.071Z
-        expires: 2023-05-04T16:15:19.065Z
+        expires: 2023-03-23T11:26:23.186Z
+        created: 2023-02-21T11:26:23.194Z
 patch: {}
