@@ -21,11 +21,9 @@ Scan resources from the input Terraform statefile and compare it to your current
 | [`--to`](#--to "to") | `DCTL_TO` | `aws+tf` |
 | [`--quiet`](#--quiet "quiet") | `DCTL_QUIET` | `false` |
 | [`--strict`](#--strict "strict") | `DCTL_STRICT` | `false` |
-| [`--deep`](#--deep "deep") | `DCTL_DEEP` | `false` |
 | [`--tf-provider-version`](#--tf-provider-version "tf-provider-version") | `DCTL_TF_PROVIDER_VERSION` |  |
 | [`--driftignore`](#--driftignore "driftignore") | `DCTL_DRIFTIGNORE` | `.driftignore` |
 | [`--config-dir`](#--config-dir "config-dir") | `DCTL_CONFIG_DIR` | `$HOME` |
-| [`--only-managed`](#--only-managed "only-managed") | `DCTL_ONLY_MANAGED` | `false` |
 | [`--only-unmanaged`](#--only-unmanaged "only-unmanaged") | `DCTL_ONLY_UNMANAGED` | `false` |
 
 ### --from
@@ -71,7 +69,7 @@ $ driftctl scan --from tfstate+s3://example-bucket/*.tfstate
 $ driftctl scan --from tfstate+gs://example-bucket/**/*.tfstate
 $ driftctl scan --from tfstate+azurerm://example-container/states/*.tfstate
 
-# This works for 
+# This works for
 
 # We also support HTTP(s) URLs with authentication
 # the tool will fetch the file from the given URL
@@ -202,15 +200,11 @@ Found missing resources:
 Found resources not covered by IaC:
   aws_s3_bucket:
     - driftctl-bucket-test-3
-Found changed resources:
-  - driftctl-bucket-test-1 (aws_s3_bucket):
-    ~ Versioning.0.Enabled: false => true
 Found 3 resource(s)
  - 33% coverage
  - 1 covered by IaC
  - 1 not covered by IaC
  - 1 missing on cloud provider
- - 1/1 changed outside of IaC
 ```
 
 #### JSON
@@ -230,7 +224,6 @@ $ DCTL_OUTPUT=json://result.json driftctl scan
 {
   "summary": {
     "total_resources": 3,
-    "total_changed": 1,
     "total_unmanaged": 1,
     "total_missing": 1,
     "total_managed": 1,
@@ -262,28 +255,6 @@ $ DCTL_OUTPUT=json://result.json driftctl scan
       "type": "aws_s3_bucket"
     },
   ],
-  "differences": [
-    // A list of changes on managed resources
-    {
-      "res": {
-        "id": "driftctl-bucket-test-1",
-        "type": "aws_s3_bucket"
-      },
-      "changelog": [
-        {
-          "type": "update", // Kind of change, could be one of update, create, delete
-          "path": [
-            // Path of the change, sorted from root to leaf
-            "Versioning",
-            "0",
-            "Enabled"
-          ],
-          "from": false, // Mixed type
-          "to": true // Mixed type
-        }
-      ]
-    }
-  ],
   "coverage": 33,
   "provider_name": "AWS",
   "provider_version": "2.18.5",
@@ -308,33 +279,6 @@ $ DCTL_OUTPUT=html://output.html driftctl scan
 
 ![Output HTML With Drifts](../../assets/output_html_1.png)
 ![Output HTML Without Drifts](../../assets/output_html_2.png)
-
-#### Computed Fields
-
-From Terraform documentation, a `computed` field is often used to represent values that are not user configurable or can not be known at time of `terraform plan` or `apply`.
-
-Since those values are not known ahead of time from terraform point of view, it is obviously possible that the values displayed in a terraform state file are not up-to-date and may require a `terraform refresh`.
-
-Thus, it could be possible that driftctl finds drifts that are considered false positives because of those outdated values.
-
-We decided to output computed fields and to display a message at the end of the scan to remind you of this behavior.
-
-```shell
-Found changed resources:
-  - eipalloc-0e2894d8ea42851df (aws_eip):
-    ~ AssociationId: "" => "eipassoc-0ee67e1ca759733a2" (computed)
-    ~ Instance: "" => "i-004611704837fd09a" (computed)
-    ~ NetworkInterface: "" => "eni-0a62972b0471447f6" (computed)
-    ~ PrivateDns: <nil> => "ip-172-31-40-4.eu-west-3.compute.internal" (computed)
-    ~ PrivateIp: "" => "172.31.40.4" (computed)
-Found 1 resource(s)
- - 100% coverage
- - 1 covered by IaC
- - 0 not covered by IaC
- - 0 missing on cloud provider
- - 1/1 changed outside of IaC
-You have diffs on computed fields, check the documentation for potential false positive drifts
-```
 
 ### --to
 
@@ -380,32 +324,6 @@ For now, resources include:
 ```shell
 # Enable the strict mode
 $ driftctl scan --strict
-```
-
-### --deep
-
-⚠️ This is **EXPERIMENTAL**
-
-:::warning
-Enabling deep mode while using a Terraform state as IaC source can lead to unexpected behaviors: false positive drifts, undetected drifts.
-:::
-
-Deep mode enables resources details retrieval. It was the original driftctl behavior.
-
-In **deep** mode we compare resources details to expected ones (like a terraform plan).
-In **non-deep** mode (the default one) we only enumerate resources and display which ones are out of IaC scope.
-
-Since it overlaps the new `terraform plan` behavior (as of Terraform 0.15 it shows diffs between your state and the remote) we moved the original behavior under the `--deep` **experimental** flag.
-
-:::info
-If you use a version of driftctl prior to 0.13, the deep mode was the default behavior. If you want to keep the old behavior in a newer version you have to enable the deep mode flag.
-:::
-
-#### Usage
-
-```shell
-# Enable the deep mode
-$ driftctl scan --deep
 ```
 
 ### --tf-provider-version
@@ -469,38 +387,6 @@ Note that when using both `--tf-lockfile` and `--tf-provider-version` flags toge
 
 ```shell
 $ driftctl scan --to aws+tf --tf-lockfile path/to/.terraform.lock.hcl
-```
-
-### --only-managed
-
-This flag allows you to output only resources that are managed by your IaC.
-
-:::info
-Note that this flag will also output your missing resources in the scan report.
-
-Please be aware that this flag relies on `--deep` mode supported resources only.
-
-Another limitation in its current state is that you will be subject to rate limits by your Cloud Provider since we still enumerate all resources before reading resources details.
-:::
-
-#### Usage
-
-```shell
-$ driftctl scan --only-managed
-
-Found missing resources:
-  - vol-1234567890 (aws_ebs_volume)
-  From tfstate://terraform.tfstate
-    - i-1234567890 (aws_instance.bar)
-Found changed resources:
-  From tfstate://terraform.tfstate
-    - i-0987654321 (aws_instance.foo):
-        ~ instance_type: "t2.nano" => "t2.micro"
-Found 4 resource(s)
- - 50% coverage
- - 2 resource(s) managed by Terraform
-     - 1/2 resource(s) out of sync with Terraform state
- - 2 resource(s) found in a Terraform state but missing on the cloud provider
 ```
 
 ### --only-unmanaged
