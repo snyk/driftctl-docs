@@ -29,18 +29,9 @@ Be sure to have enabled these APIs for the GCP project you are using.
 
 To be able to enumerate resources, you need at least the role [Cloud Asset Viewer](https://cloud.google.com/iam/docs/understanding-roles#cloud-asset-roles).
 
-:::info deep mode
-If you want to use driftctl with deep mode, driftctl will also need to retrieve resource's details and the **Cloud Asset Viewer** will not be enough.
-If you want to be able to get the details you should set up the basic role [Viewer](https://cloud.google.com/iam/docs/understanding-roles#basic-definitions) on your project.
-To read your IAM policies you will also need role [iam.securityReviewer](https://cloud.google.com/iam/docs/understanding-roles#iam-roles) on your project.
-:::
-
 ### Required roles
 
 ```
 # Mandatory role to allow driftctl to enumerate resources
 roles/cloudasset.viewer
-
-# Required for deep mode only
-roles/viewer
 ```
