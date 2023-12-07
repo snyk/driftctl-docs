@@ -2,7 +2,7 @@
 
 https://docs.driftctl.com
 
-This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a static site generator for documentation sites.
+This website is built using [Docusaurus 3](https://docusaurus.io/blog/releases/3.0), a static site generator for documentation sites.
 
 ## Get Started
 
