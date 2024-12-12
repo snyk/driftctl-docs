@@ -1,7 +1,18 @@
 version: 2.1
 
 orbs:
-  prodsec: snyk/prodsec-orb@1.0
+  prodsec: snyk/prodsec-orb@1
+
+jobs:
+  security-scans:
+    docker:
+      - image: cimg/node:lts
+    resource_class: small
+    steps:
+      - checkout
+      - prodsec/security_scans:
+          mode: auto
+          iac-scan: disabled
 
 workflows:
   version: 2
@@ -12,3 +23,11 @@ workflows:
           context:
             - snyk-bot-slack
           channel: group-infrastructure-as-code-alerts
+          filters:
+            branches:
+              ignore: main
+
+      - security-scans:
+          name: Security Scans
+          context:
+            - analysis-iac
