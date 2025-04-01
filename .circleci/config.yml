@@ -22,7 +22,7 @@ workflows:
           name: Scan repository for secrets
           context:
             - snyk-bot-slack
-          channel: group-infrastructure-as-code-alerts
+          channel: snyk-vuln-alerts-iac
           filters:
             branches:
               ignore: main
