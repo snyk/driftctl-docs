@@ -3,8 +3,8 @@ id: installation
 title: Installation
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 driftctl is available on Linux, macOS and Windows.
 
@@ -57,80 +57,19 @@ Optionally install driftctl to a central location in your `PATH`:
 $ sudo mv driftctl /usr/local/bin/
 ```
 
-## Verify digital signatures
-
-driftctl releases are signed using PGP key (ed25519) with fingerprint `65DD A08A A160 5FC8 211F C928 FFB5 FCAF D223 D274`. Our key can be retrieved from common keyservers.
-
-:::caution
-Since **07/01/2023** the key to sign driftctl releases has been changed because of [a security issue](https://circleci.com/blog/january-4-2023-security-alert) with CircleCI secrets.
-
-Prior to **v0.38.2** they key used to verify release was `2776 6600 5A7F 01D4 84F6376D ACC7 76A7 9C82 4EBD`
-:::
-
-**Current key**
-- Fingerprint `65DD A08A A160 5FC8 211F C928 FFB5 FCAF D223 D274`
-
-**legacy key < v0.38.2**
-- Fingerprint `2776 6600 5A7F 01D4 84F6376D ACC7 76A7 9C82 4EBD`
+## Verify checksum
 
 ```shell
-# Download binary, checksums and signature
+# Download binary and checksums
 $ curl -L https://github.com/snyk/driftctl/releases/latest/download/driftctl_linux_amd64 -o driftctl_linux_amd64
 $ curl -L https://github.com/snyk/driftctl/releases/latest/download/driftctl_SHA256SUMS -o driftctl_SHA256SUMS
-$ curl -L https://github.com/snyk/driftctl/releases/latest/download/driftctl_SHA256SUMS.gpg -o driftctl_SHA256SUMS.gpg
-
-# Import key
-# The legacy key must be imported manually since it is now revoked on the keyservers
-$ gpg --keyserver hkps://keys.openpgp.org --recv-keys 65DDA08AA1605FC8211FC928FFB5FCAFD223D274
-
-# Verify signature (optionally trust the key from gnupg to avoid any warning)
-$ gpg --verify driftctl_SHA256SUMS.gpg driftctl_SHA256SUMS
 
 # Verify checksum
 $ sha256sum --ignore-missing -c driftctl_SHA256SUMS
 driftctl_linux_amd64: OK
 ```
 
-## PGP Public Key
-
-**Current**
-
-```
------BEGIN PGP PUBLIC KEY BLOCK-----
-mDMEY7wXuhYJKwYBBAHaRw8BAQdAhxCEy/sUZ4SCXrHQbfzpH7t+ivMAz18YdHKR
-x6lqw8q0KVNueWsgPHRlYW0tY2xvdWQtY29uZmlnK3NlY3VyaXR5QHNueWsuaW8+
-iJkEExYKAEEWIQRl3aCKoWBfyCEfySj/tfyv0iPSdAUCY7wXugIbAwUJCWYBgAUL
-CQgHAgIiAgYVCgkICwIEFgIDAQIeBwIXgAAKCRD/tfyv0iPSdOqxAQDCBtm8dE6D
-gxmDGf0SfFzkiI+kC25GQ15noy8YqFO8+QD7BD5Atetz8Htjm21EqD4YPWXk4CkA
-4SxepihFyQpoRwY=
-=lQGW
------END PGP PUBLIC KEY BLOCK-----
-```
-
-**Legacy**
-
-```
------BEGIN PGP PUBLIC KEY BLOCK-----
-
-xjMEYBv2ABYJKwYBBAHaRw8BAQdAstkQggX4bNXmfdiy+Cn6XrQLk0GNx+s4hbvuOi6DBS7NJENs
-b3Vkc2tpZmYgPHNlY3VyaXR5QGNsb3Vkc2tpZmYuY29tPsKQBBMWCAA4FiEEJ3ZmAFp/AdSE9jdt
-rMd2p5yCTr0FAmAb9gACGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQrMd2p5yCTr3CCgEA
-5kYdx5TMTHUJXwVs64QpQB5neN41y7EEnD7zWoZUMxcBAOeZxVsR6VZQENhpBpFcSJDSHAK6KDdr
-BYc2FpRDXQ4GwsFcBBABCgAGBQJgHBbYAAoJEDma9pCSxye2z4MQALniFM6VuVuDvP8wjpUixIFl
-H+Z702+VZU01hfQu27C0jR3WFDPlmRf4biqLD6NV4jfcWIUcAh19uRnHH31if2u4Ij4ZLB6uhm1C
-fcI0NLxyCvTorriA6Bf8rtt+iZ7K6nlolc2ZKJsQe6l2O3E0zC5WQlawjKKjjbjjA6C2CxFwcYib
-cmGobqIhTFHwta4sL9icFpEdt30XnVrJ1JHzEdYxK2YUoAJXyuPRH9Z9MbjJXL+uT98cigtOLdM2
-G/KCrWCrMS7lUznAvsJJ8Pova3dyT4d1AoVXPnKhOp0t4GPX5x4SRIe2QexvNEIoScXfQrxsONWL
-PkAVttALmfrveCgTESyBIw57Xe1wHOJmYrIkrMXNljBO2cC8DHkRKgo6xDOFmGfvBhQdUIiSe3/8
-bXbVnWjpjWhhIAoSMJBpPFWnFs+AlOk+BjYf/CMKf5eLuCSBF+JIGaulGDxhVdVcyBjp2FFw9FBs
-0tELKfds8OmXi2JzVT+K4oXNjRca9UwCmqhntkTOdOKMls/q9fCkVGxSiLKLGNr+fuU/1q9MISHi
-HqAiERT0cBjBFgr15Fn+hkpiSoDitaTZWoAfAQynnlh7WFXXPD2LQwk5lg3SkC0czSkacaaAoRCW
-pSVXbMUWB0hD0lSaoPcDNsNyVfzEwMXqWWLBkKZbTki+GanHkb+J
-=dbR5
------END PGP PUBLIC KEY BLOCK-----
-```
-
-  </TabItem>
+ </TabItem>
   <TabItem value="windows">
 
 ```shell
