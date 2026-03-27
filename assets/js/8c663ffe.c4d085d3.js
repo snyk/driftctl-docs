@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkwebsite=globalThis.webpackChunkwebsite||[]).push([[71500],{84150(e,s,a){a.r(s),a.d(s,{default:()=>r});a(96540);var t=a(56347),u=a(44070),c=a(74848);const r=()=>{const e=(0,u.r7)();return(0,c.jsx)(t.rd,{to:`${e.path}/usage/cmd/scan-usage#--deep`})}}}]);
