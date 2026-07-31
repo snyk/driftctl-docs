@@ -22,6 +22,7 @@ workflows:
           name: Scan repository for secrets
           context:
             - snyk-bot-slack
+            - prodsec-orb-runtime
           channel: snyk-vuln-alerts-iac
           filters:
             branches:
@@ -31,3 +32,4 @@ workflows:
           name: Security Scans
           context:
             - analysis-iac
+            - prodsec-orb-runtime
